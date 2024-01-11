@@ -4,7 +4,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import SubCategory from '../SubCategory'; 
 
-// SubCategory component remains the same
+
 
 interface CategoryProps {
   title: string;
@@ -40,7 +40,7 @@ const Category: React.FC<CategoryProps> = ({ title, subcategories, onCategoryCli
   );
 };
 
-// CardContainer component
+
 const CardContainer: React.FC<{ categories: CategoryProps[]; categoryName: string }> = ({ categories, categoryName }) => (
   <div className="card-container">
     <div className="card">
@@ -56,6 +56,8 @@ const CardContainer: React.FC<{ categories: CategoryProps[]; categoryName: strin
         switch (categoryName) {
           case "Name":
             return <NameCard />;
+            case "Email":
+              return <EmailCard />;
           case "Date Of Birth":
             return <DateOfBirthCard />;
           case "Address Line 01":
@@ -68,7 +70,7 @@ const CardContainer: React.FC<{ categories: CategoryProps[]; categoryName: strin
   </div>
 );
 
-// Reusable CardContent components
+
 const NameCard: React.FC = () => (
   <div>
     <h2>Name</h2>
@@ -107,7 +109,22 @@ const AddressLine01Card: React.FC = () => (
   </div>
 );
 
-
+const EmailCard: React.FC = () => (
+  <div>
+    <h2>Email</h2>
+    <div>
+      <label>Type : </label>
+      <select className="margin-t">
+        <option value="option1">Text</option>
+        <option value="option2">Number</option>
+      </select>
+    </div>
+    Email:{" "}
+    <input className="margin-t"placeholder="PramodNakandara@gmail.com" />
+    <br />
+    Example: <input placeholder="ruwan800@gmail.com" />
+  </div>
+);
 
 const CategoryList: React.FC = () => {
   const [categoryType, setCategoryType] = useState("");
