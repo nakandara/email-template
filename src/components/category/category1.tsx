@@ -1,19 +1,10 @@
-
 import React, { useState } from "react";
 import "./CardBoxes.css"; // Import the CSS file
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import SubCategory from '../SubCategory'; 
 
-interface SubCategoryProps {
-  title: string;
-  onSelect: () => void;
-}
-
-const SubCategory: React.FC<SubCategoryProps> = ({ title, onSelect }) => (
-  <div className="subcategory" onClick={onSelect}>
-    <p>{title.toLowerCase()}.</p>
-  </div>
-);
+// SubCategory component remains the same
 
 interface CategoryProps {
   title: string;
@@ -49,6 +40,75 @@ const Category: React.FC<CategoryProps> = ({ title, subcategories, onCategoryCli
   );
 };
 
+// CardContainer component
+const CardContainer: React.FC<{ categories: CategoryProps[]; categoryName: string }> = ({ categories, categoryName }) => (
+  <div className="card-container">
+    <div className="card">
+      <div className="category-list-container">
+        {categories.map((category, index) => (
+          <Category key={index} title={category.title} subcategories={category.subcategories} onCategoryClick={category.onCategoryClick} />
+        ))}
+      </div>
+    </div>
+
+    <div className="card">
+      {(() => {
+        switch (categoryName) {
+          case "Name":
+            return <NameCard />;
+          case "Date Of Birth":
+            return <DateOfBirthCard />;
+          case "Address Line 01":
+            return <AddressLine01Card />;
+          default:
+            return "Select Options";
+        }
+      })()}
+    </div>
+  </div>
+);
+
+// Reusable CardContent components
+const NameCard: React.FC = () => (
+  <div>
+    <h2>Name</h2>
+    <div className="margin-t">
+      <label>Type : </label>
+      <select>
+        <option value="option1">Text</option>
+        <option value="option2">Number</option>
+      </select>
+    </div>{" "}
+    Example: <input placeholder="ruwan800@gmail.com" />
+  </div>
+);
+
+const DateOfBirthCard: React.FC = () => (
+  <div>
+    <h2>Date Of Birth</h2>
+    <div></div>
+  </div>
+);
+
+const AddressLine01Card: React.FC = () => (
+  <div>
+    <h2>Address Line 01</h2>
+    <div>
+      <label>Type : </label>
+      <select className="margin-t">
+        <option value="option1">Text</option>
+        <option value="option2">Number</option>
+      </select>
+    </div>
+    Address Line 01:{" "}
+    <input className="margin-t"placeholder="*7 44 A, Isuru Uyana, Kurunegala" />
+    <br />
+    Example: <input placeholder="ruwan800@gmail.com" />
+  </div>
+);
+
+
+
 const CategoryList: React.FC = () => {
   const [categoryType, setCategoryType] = useState("");
   const [categoryName, setCategoryName] = useState("");
@@ -73,67 +133,7 @@ const CategoryList: React.FC = () => {
     },
   ].map(category => ({ ...category, onCategoryClick: handleCategoryClick }));
 
-  return (
-    <div className="card-container">
-      <div className="card">
-        <div className="category-list-container">
-          {categories.map((category, index) => (
-            <Category key={index} title={category.title} subcategories={category.subcategories} onCategoryClick={category.onCategoryClick} />
-          ))}
-        </div>
-      </div>
-
-      <div className="card">
-        {(() => {
-          switch (categoryName) {
-            case "Name":
-              return (
-                <div>
-                  <h2>{categoryName}</h2>
-                  <div className="margin-t">
-                    <label> Type : </label>
-                    <select>
-                      <option value="option1">Text</option>
-                      <option value="option2">Number</option>
-                    </select>
-                  </div>{" "}
-                  Example: <input placeholder="ruwan800@gmail.com" />
-                </div>
-              );
-            case "Date Of Birth":
-              return (
-                <div>
-                  <h2>{categoryName}</h2>
-                  <div></div>
-                </div>
-              );
-            case "Address Line 01":
-              return (
-                <div>
-                  <h2>{categoryName}</h2>
-                  <div>
-                    <label> Type : </label>
-                    <select>
-                      <option value="option1">Text</option>
-                      <option value="option2">Number</option>
-                    </select>
-                  </div>
-                  Address Line 01:{" "}
-                  <input
-                    className=""
-                    placeholder="*7 44 A, Isuru Uyana, Kurunegala"
-                  />
-                  <br />
-                  Example: <input placeholder="ruwan800@gmail.com" />
-                </div>
-              );
-            default:
-              return "Select Options";
-          }
-        })()}
-      </div>
-    </div>
-  );
+  return <CardContainer categories={categories} categoryName={categoryName} />;
 };
 
 export default CategoryList;
