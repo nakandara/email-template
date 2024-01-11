@@ -11,3 +11,39 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.sidebar {
+  width: 0;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #333;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  color: white;
+}
+
+.sidebar li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #555;
+}
+
+.sidebar button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+}
+
+.sidebar.open {
+  width: 250px;
+}
+
+/* Add more styles as needed */

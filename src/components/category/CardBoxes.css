@@ -1,0 +1,35 @@
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1;
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-container {
+  margin-bottom: 1rem;
+}
+
+.category-header {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #c5c9b2;
+  padding: 0.1rem;
+  border-radius: 4px;
+}
+
+.subcategory-container {
+  margin-top: 0.5rem;
+}
+
+.margin-t{
+  margin-bottom: 100px;
+}
