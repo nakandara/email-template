@@ -11,7 +11,7 @@ function App() {
     <Router>
     <div style={{ display: 'flex'}}  >
       <Sidebar  />
-      <div style={{ flex: 1 ,border: '1px solid #ccc'}}>
+      <div style={{ flex: 1 ,border: '1px solid #ccc',marginLeft:"100px"}}>
         <Routes>
           <Route path="/dashboard" element={<DashboardHome />} />
           <Route path="/dashboard/about" element={<DashboardSelectEvents />} />

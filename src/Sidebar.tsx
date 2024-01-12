@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './Sidebar.css'; // Import the CSS file
 
 function Sidebar() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -9,7 +10,7 @@ function Sidebar() {
   };
 
   return (
-    <aside style={{ border: '1px solid #ccc' }}>
+    <aside className={`sidebar ${isExpanded ? 'expanded' : ''}`}>
       <nav>
         <ul>
           <li>
@@ -18,7 +19,7 @@ function Sidebar() {
           <li>
             <Link to="/dashboard/about">About</Link>
           </li>
-          <li onClick={handleToggle}>
+          <li onClick={handleToggle} className="category-toggle">
             <span style={{ cursor: 'pointer' }}>Categories</span>
             {isExpanded && (
               <ul>
