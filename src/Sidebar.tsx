@@ -20,11 +20,11 @@ function Sidebar() {
             <Link to="/dashboard/about">About</Link>
           </li>
           <li onClick={handleToggle} className="category-toggle">
-            <span style={{ cursor: 'pointer' }}>Categories</span>
+            <span style={{ cursor: 'pointer' }}>Campaign</span>
             {isExpanded && (
               <ul>
                 <li>
-                  <Link to="/dashboard/category1">Category 1</Link>
+                  <Link to="/dashboard/category1">Created campaign</Link>
                 </li>
                 <li>
                   <Link to="/dashboard/category2">Category 2</Link>
