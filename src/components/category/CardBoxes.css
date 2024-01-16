@@ -24,6 +24,7 @@
   background-color: #ecd0ea;
   padding: 0.1rem;
   border-radius: 4px;
+  padding-left: 50px;
 }
 
 .subcategory-container {
@@ -32,4 +33,28 @@
 
 .margin-t{
   margin-bottom: 100px;
+}
+
+.pickUp-card-container{
+  display: flex;
+  flex-wrap: wrap;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+}
+.heading-pickup{
+  color: blue;
+  font-weight: 800;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 650px) {
+  .pickUp-card-container{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
 }

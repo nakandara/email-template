@@ -3,7 +3,12 @@ import "./CardBoxes.css"; // Import the CSS file
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import SubCategory from '../SubCategory'; 
-
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import StarIcon from '@mui/icons-material/Star';
 
 
 interface CategoryProps {
@@ -69,6 +74,37 @@ const CardContainer: React.FC<{ categories: CategoryProps[]; categoryName: strin
     </div>
   </div>
 );
+
+const PickupVariables: React.FC<{ categories: CategoryProps[]; categoryName: string }> = ({ categories, categoryName }) => (
+  <div className="pickUp-card-container">
+    <div className="card">
+      <div className="">
+       <div className="heading-pickup">Created Variables</div>
+       <List
+      sx={{ bgcolor: 'background.paper' }}
+      aria-label="contacts"
+    >
+      <ListItem disablePadding>
+        <ListItemButton>
+          <ListItemIcon>
+            <StarIcon />
+          </ListItemIcon>
+          <ListItemText primary="User-Name" />
+        </ListItemButton>
+      </ListItem>
+      <ListItem disablePadding>
+        <ListItemButton>
+          <ListItemText inset primary="User-Postalcode" />
+        </ListItemButton>
+      </ListItem>
+    </List>
+      </div>
+    </div>
+
+  
+  </div>
+);
+
 
 
 const NameCard: React.FC = () => (
@@ -150,7 +186,10 @@ const CategoryList: React.FC = () => {
     },
   ].map(category => ({ ...category, onCategoryClick: handleCategoryClick }));
 
-  return <CardContainer categories={categories} categoryName={categoryName} />;
+  return <div>
+    <CardContainer categories={categories} categoryName={categoryName} />
+    <PickupVariables  categories={categories} categoryName={categoryName}/>
+  </div>;
 };
 
 export default CategoryList;
