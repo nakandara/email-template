@@ -94,7 +94,7 @@ const PickupVariables: React.FC<{ categories: CategoryProps[]; categoryName: str
       </ListItem>
       <ListItem disablePadding>
         <ListItemButton>
-          <ListItemText inset primary="User-Postalcode" />
+          <ListItemText inset primary="User-" />
         </ListItemButton>
       </ListItem>
     </List>
