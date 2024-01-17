@@ -80,24 +80,7 @@ const PickupVariables: React.FC<{ categories: CategoryProps[]; categoryName: str
     <div className="card">
       <div className="">
        <div className="heading-pickup">Created Variables</div>
-       <List
-      sx={{ bgcolor: 'background.paper' }}
-      aria-label="contacts"
-    >
-      <ListItem disablePadding>
-        <ListItemButton>
-          <ListItemIcon>
-            <StarIcon />
-          </ListItemIcon>
-          <ListItemText primary="User-Name" />
-        </ListItemButton>
-      </ListItem>
-      <ListItem disablePadding>
-        <ListItemButton>
-          <ListItemText inset primary="User-" />
-        </ListItemButton>
-      </ListItem>
-    </List>
+      hghg
       </div>
     </div>
 

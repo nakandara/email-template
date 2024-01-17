@@ -19,7 +19,7 @@ function Sidebar() {
           <li>
             <Link to="/dashboard/about">About</Link>
           </li>
-          <li onClick={handleToggle} className="category-toggle">
+          <li onClick={handleToggle} className="">
             <span style={{ cursor: 'pointer' }}>Campaign</span>
             {isExpanded && (
               <ul>

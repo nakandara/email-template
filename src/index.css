@@ -18,10 +18,11 @@ code {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #333;
+  background-color: #faf2f2;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
+  color: white;
 }
 
 .sidebar ul {
@@ -33,13 +34,15 @@ code {
 .sidebar li {
   padding: 10px;
   cursor: pointer;
-  border-bottom: 1px solid #555;
+  color: white;
+ 
 }
 
 .sidebar button {
   position: fixed;
   top: 20px;
   left: 20px;
+  color: white;
 }
 
 .sidebar.open {
