@@ -24,10 +24,10 @@ function Sidebar() {
             {isExpanded && (
               <ul>
                 <li>
-                  <Link to="/dashboard/category1">Created campaign</Link>
+                  {/* <Link to="/dashboard/category1">Created campaign</Link> */}
                 </li>
                 <li>
-                  <Link to="/dashboard/category2">Category 2</Link>
+                  <Link to="/dashboard/category2">User Registered</Link>
                 </li>
                 
               </ul>
