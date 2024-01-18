@@ -146,6 +146,7 @@ import {
   Collapse,
   Typography,
 } from "@mui/material";
+import CustomCard from "./CustomCardProps";
 
 interface DataItem {
   variable: string;
@@ -189,7 +190,8 @@ const Category2: React.FC = () => {
         button
         onClick={() => toggleCategory(category.title)}
         sx={{
-          backgroundColor: selectedCategory === category.title ? "lightblue" : "inherit",
+          backgroundColor:
+            selectedCategory === category.title ? "lightblue" : "inherit",
         }}
       >
         <ListItemText primary={category.title} />
@@ -200,7 +202,10 @@ const Category2: React.FC = () => {
         )}
       </ListItem>
       {category.subcategories && category.subcategories.length > 0 && (
-        <Collapse sx={{ marginLeft: "50px" }} in={expandedCategories.includes(category.title)}>
+        <Collapse
+          sx={{ marginLeft: "50px" }}
+          in={expandedCategories.includes(category.title)}
+        >
           <List component="div" disablePadding>
             {category.subcategories.map(renderCategory)}
           </List>
@@ -209,7 +214,7 @@ const Category2: React.FC = () => {
     </div>
   );
 
-   const newData: DataItem[] = [
+  const newData: DataItem[] = [
     {
       variable: "Name",
       example: "Ruwan",
@@ -269,26 +274,30 @@ const Category2: React.FC = () => {
 
   const transformedData: Category[] = newData.map(transformDataToCategory);
 
-  const CardContainer: React.FC<{selectedCategory:any }> = ({ selectedCategory }) => (
+  const CardContainer: React.FC<{ selectedCategory: any }> = ({
+    selectedCategory,
+  }) => (
     <div className="card-container">
-      
-  
       <div className="card">
         {(() => {
           switch (selectedCategory) {
             case "Name":
               return <NameCard />;
-              case "Address Line 1":
-                return <AddressCardOne />;
-                case "Address Line 2":
-                  return <AddressCardTwo />;
-                  case "City":
-                    return <CityCard/>;
-                    case "Zip Code":
-                      return <ZipCodeCard/>;
-                      case "Birthday":
-                        return <BirthDayCard/>;
-            
+            case "Address Line 1":
+              return <AddressCardOne />;
+            case "Address Line 2":
+              return <AddressCardTwo />;
+            case "City":
+              return <CityCard />;
+            case "Zip Code":
+              return <ZipCodeCard />;
+            case "Birthday":
+              return <BirthDayCard />;
+            case "Type":
+              return <PastOrdersTypeCard />;
+            case "Price":
+              return <PastOrdersPriceCard />;
+
             default:
               return "Select Options";
           }
@@ -297,140 +306,141 @@ const Category2: React.FC = () => {
     </div>
   );
 
-
-
   const NameCard: React.FC = () => (
+    <CustomCard title="Sadun Perera" >
+     
+    </CustomCard>
+  );
+  
+  const AddressCardOne: React.FC = () => (
+    <CustomCard title="CA California" >
+     
+    </CustomCard>
+  );
+  const AddressCardTwo: React.FC = () => (
+    <CustomCard title="87/44 A warden Place">
+      
+    </CustomCard>
+  );
+  const CityCard: React.FC = () => (
+    <CustomCard title="Jerusalem" >
+      
+    </CustomCard>
+  );
+
+  
+  const ZipCodeCard: React.FC = () => (
+    <CustomCard title="65000" >
+      
+    </CustomCard>
+  );
+
+  const BirthDayCard: React.FC = () => (
+    <CustomCard title="65000"  >
+      sfsfsfsf
+    </CustomCard>
+  );
+
+ 
+
+  const PastOrdersTypeCard: React.FC = () => (
     <div className="">
       <div className="input-group">
         <label>Type:</label>
         <select>
-          <option value="option1">Text</option>
+          <option value="option1">String</option>
           <option value="option2">Number</option>
         </select>
       </div>
-      <div className="input-group">
-        <label>Name:</label>
-        <input type="text" />
-      </div>
+
+      <table className="custom-table-pastOrder">
+        <thead>
+          <tr>
+            <th>
+              {" "}
+              <input type="text" placeholder="Type" />
+            </th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>cat food</td>
+            <td>100</td>
+          </tr>
+        </tbody>
+      </table>
       <div className="input-group">
         <label>Example:</label>
-        <input type="text" placeholder="Sadun Perera" />
+        <div className="table-wrapper">
+          <table className="custom-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>cat food</td>
+                <td>100</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       <button className="custom-button">Save</button>
     </div>
   );
-  
 
-const AddressCardOne: React.FC = () => (
-  <div className="">
-  <div className="input-group">
-    <label>Type:</label>
-    <select>
-      <option value="option1">Text</option>
-      <option value="option2">Number</option>
-    </select>
-  </div>
-  <div className="input-group">
-    <label>Name:</label>
-    <input type="text" />
-  </div>
-  <div className="input-group">
-    <label>Example:</label>
-    <input type="text" placeholder="CA california" />
-    
-  </div>
-  <button className="custom-button">Save</button>
-</div>
-);
+  const PastOrdersPriceCard: React.FC = () => (
+    <div className="">
+      <div className="input-group">
+        <label>Type:</label>
+        <select>
+          <option value="option1">String</option>
+          <option value="option2">Number</option>
+        </select>
+      </div>
 
-const AddressCardTwo: React.FC = () => (
-  <div className="">
-  <div className="input-group">
-    <label>Type:</label>
-    <select>
-      <option value="option1">Text</option>
-      <option value="option2">Number</option>
-    </select>
-  </div>
-  <div className="input-group">
-    <label>Name:</label>
-    <input type="text" />
-  </div>
-  <div className="input-group">
-    <label>Example:</label>
-    <input type="text" placeholder="87/44 A warden Place " />
-    
-  </div>
-  <button className="custom-button">Save</button>
-</div>
-);
-
-const CityCard: React.FC = () => (
-  <div className="">
-  <div className="input-group">
-    <label>Type:</label>
-    <select>
-      <option value="option1">Text</option>
-      <option value="option2">Number</option>
-    </select>
-  </div>
-  <div className="input-group">
-    <label>Name:</label>
-    <input type="text" />
-  </div>
-  <div className="input-group">
-    <label>Example:</label>
-    <input type="text" placeholder="Jerusalem" />
-    
-  </div>
-  <button className="custom-button">Save</button>
-</div>
-);
-
-
-const ZipCodeCard: React.FC = () => (
-  <div className="">
-  <div className="input-group">
-    <label>Type:</label>
-    <select>
-      <option value="option1">Text</option>
-      <option value="option2">Number</option>
-    </select>
-  </div>
-  <div className="input-group">
-    <label>Name:</label>
-    <input type="text" />
-  </div>
-  <div className="input-group">
-    <label>Example:</label>
-    <input type="text" placeholder="65000" />
-  </div>
-  <button className="custom-button">Save</button>
-</div>
-);
-
-const BirthDayCard: React.FC = () => (
-  <div className="">
-  <div className="input-group">
-    <label>Type:</label>
-    <select>
-      <option value="option1">Text</option>
-      <option value="option2">Number</option>
-    </select>
-  </div>
-  <div className="input-group">
-    <label>Name:</label>
-    <input type="text" />
-  </div>
-  <div className="input-group">
-    <label>Example:</label>
-    <input type="text" placeholder="97/12/24" />
-  </div>
-  <button className="custom-button">Save</button>
-</div>
-);
-
-
+      <table className="custom-table-pastOrder">
+        <thead>
+          <tr>
+            <th>
+              Type
+            </th>
+            <th><input type="text" placeholder="Price" /></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>cat food</td>
+            <td>100</td>
+          </tr>
+        </tbody>
+      </table>
+      <div className="input-group">
+        <label>Example:</label>
+        <div className="table-wrapper">
+          <table className="custom-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>cat food</td>
+                <td>100</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <button className="custom-button">Save</button>
+    </div>
+  );
 
   return (
     <List>
@@ -438,8 +448,7 @@ const BirthDayCard: React.FC = () => (
         <div className="card">{transformedData.map(renderCategory)}</div>
         <div className="card" style={{ background: "lightgray" }}>
           <h2>{selectedCategory}</h2>
-          <CardContainer selectedCategory={selectedCategory}/>
-          
+          <CardContainer selectedCategory={selectedCategory} />
         </div>
       </div>
     </List>

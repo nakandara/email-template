@@ -73,6 +73,11 @@
   margin-bottom: 15px;
 }
 
+.input-group-PastOrders{
+  margin-bottom: 15px;
+  width: 20%;
+}
+
 label {
   display: block;
   margin-bottom: 5px;
@@ -119,5 +124,48 @@ input {
 @media (max-width: 600px) {
   .custom-button {
     width: 100%; /* Make the button full width on small screens */
+  }
+}
+/* YourStyles.css */
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px; /* Adjust the margin as needed */
+}
+
+.custom-table-pastOrder{
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+   /* Adjust the margin as needed */
+   margin-bottom: 50px;
+}
+.custom-table th,
+.custom-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.custom-table-pastOrder th,
+.custom-table-pastOrder td {
+  border: 1px solid #0e0c0c;
+  padding: 8px;
+  text-align: left;
+}
+/* Add responsive styles for smaller screens */
+@media (max-width: 600px) {
+  .custom-table {
+    font-size: 14px; /* Adjust the font size as needed */
+  }
+
+  .custom-table th,
+  .custom-table td {
+    padding: 6px;
   }
 }
