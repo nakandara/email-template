@@ -332,8 +332,8 @@ const Category2: React.FC = () => {
           <h2>Created Variables</h2>
           <div className="create_list">
      
-      {nameNameCard}
-      {addressLine1CardName}
+      {nameNameCard}<br/>
+      {addressLine1CardName}<br/>
       {addressLine2CardName}
       {/* Rest of your Category2 component */}
     </div>
