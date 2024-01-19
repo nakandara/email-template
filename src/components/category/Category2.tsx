@@ -138,6 +138,7 @@
 // export default Category2;
 
 import React, { useState } from "react";
+import { useCardContext } from "../context/CardContext";
 import "./CardBoxes.css";
 import {
   List,
@@ -169,6 +170,7 @@ const transformDataToCategory = (data: DataItem): Category => {
 };
 
 const Category2: React.FC = () => {
+  const { nameCardType, nameNameCard,addressLine1CardName} = useCardContext();
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
@@ -274,73 +276,82 @@ const Category2: React.FC = () => {
 
   const transformedData: Category[] = newData.map(transformDataToCategory);
 
-  const CardContainer: React.FC<{ selectedCategory: any }> = ({
+  const CardContainer: React.FC<{ selectedCategory: any; type:string; name: string }> = ({
     selectedCategory,
+    type,
+    name,
   }) => (
     <div className="card-container">
       <div className="card">
         {(() => {
           switch (selectedCategory) {
             case "Name":
-              return <NameCard />;
+              return <NameCard type={type} name={name} />;
             case "Address Line 1":
-              return <AddressCardOne />;
+              return <AddressCardOne type={type} name={name} />;
             case "Address Line 2":
-              return <AddressCardTwo />;
+              return <AddressCardTwo type={type} name={name} />;
             case "City":
-              return <CityCard />;
+              return <CityCard type={type} name={name} />;
             case "Zip Code":
-              return <ZipCodeCard />;
+              return <ZipCodeCard type={type} name={name} />;
             case "Birthday":
-              return <BirthDayCard />;
+              return <BirthDayCard type={type} name={name} />;
             case "Type":
-              return <PastOrdersTypeCard />;
+              return <PastOrdersTypeCard  />;
             case "Price":
               return <PastOrdersPriceCard />;
-
             default:
               return "Select Options";
           }
         })()}
       </div>
+     
     </div>
   );
 
-  const NameCard: React.FC = () => (
-    <CustomCard title="Sadun Perera" >
-     
+  const NameCard: React.FC<{ type: string; name: string }> = ({ type, name }) => (
+    <CustomCard title="Sadun Perera" cardName="NameCard" type={type} name={name}>
+      {/* Additional content for the NameCard component */}
+    </CustomCard>
+  );
+
+  const AddressCardOne: React.FC<{ type: string; name: string }> = ({ type, name }) => (
+    <CustomCard title="Madurupitiya" cardName="AddressCardOne" type={type} name={name}>
+      {/* Additional content for the NameCard component */}
     </CustomCard>
   );
   
-  const AddressCardOne: React.FC = () => (
-    <CustomCard title="CA California" >
-     
+  const AddressCardTwo: React.FC<{ type: string; name: string }> = ({ type, name }) => (
+    <CustomCard title="Loluwagoda" cardName="AddressCardTwo" type={type} name={name}>
+      {/* Additional content for the NameCard component */}
     </CustomCard>
   );
-  const AddressCardTwo: React.FC = () => (
-    <CustomCard title="87/44 A warden Place">
-      
+  
+
+  const CityCard: React.FC<{ type: string; name: string }> = ({ type, name }) => (
+    <CustomCard title="Mirigama" cardName="CityCard" type={type} name={name}>
+      {/* Additional content for the NameCard component */}
     </CustomCard>
   );
-  const CityCard: React.FC = () => (
-    <CustomCard title="Jerusalem" >
-      
+  
+  const ZipCodeCard: React.FC<{ type: string; name: string }> = ({ type, name }) => (
+    <CustomCard title="11204" cardName="ZipCodeCard" type={type} name={name}>
+      {/* Additional content for the NameCard component */}
     </CustomCard>
   );
+  
+  const BirthDayCard: React.FC<{ type: string; name: string }> = ({ type, name }) => (
+    <CustomCard title="1888-07-17" cardName="BirthDayCard" type={type} name={name}>
+      {/* Additional content for the NameCard component */}
+    </CustomCard>
+  );
+  
 
   
-  const ZipCodeCard: React.FC = () => (
-    <CustomCard title="65000" >
-      
-    </CustomCard>
-  );
+  
 
-  const BirthDayCard: React.FC = () => (
-    <CustomCard title="65000"  >
-      sfsfsfsf
-    </CustomCard>
-  );
-
+ 
  
 
   const PastOrdersTypeCard: React.FC = () => (
@@ -448,9 +459,18 @@ const Category2: React.FC = () => {
         <div className="card">{transformedData.map(renderCategory)}</div>
         <div className="card" style={{ background: "lightgray" }}>
           <h2>{selectedCategory}</h2>
-          <CardContainer selectedCategory={selectedCategory} />
+          <CardContainer selectedCategory={selectedCategory} type={""} name={""} />
         </div>
       </div>
+      <div className="card-variable" style={{ background: "lightgray" }}>
+          <h2>Created Variables</h2>
+          <div>
+     
+      <h3>{nameNameCard}</h3>
+      <h3>{addressLine1CardName}</h3>
+      {/* Rest of your Category2 component */}
+    </div>
+        </div>
     </List>
   );
 };
