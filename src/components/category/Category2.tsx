@@ -11,9 +11,12 @@ import {
   ListItemText,
   Collapse,
   Typography,
+  Modal,
+  Box,
 } from "@mui/material";
 import CustomCard from "./CustomCardProps";
 import PastOrders from "./PastOrders";
+import UserRegData from "../data/UserRegData";
 
 interface DataItem {
   variable: string;
@@ -49,6 +52,7 @@ const Category2: React.FC = () => {
   } = useCardContext();
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleCategory = (title: string) => {
     if (expandedCategories.includes(title)) {
@@ -95,7 +99,13 @@ const Category2: React.FC = () => {
       )}
     </div>
   );
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
 
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
   const newData: DataItem[] = [
     {
       variable: "Name",
@@ -293,6 +303,7 @@ const Category2: React.FC = () => {
           />
         </div>
       </div>
+      <div >
       <div className="card-variable" style={{ background: "lightgray" }}>
         <h2>Created Variables</h2>
         <div className="create_list">
@@ -312,9 +323,55 @@ const Category2: React.FC = () => {
           <br />
           {pastOrderPriceCardName}
         </div>
+        <button
+          className="custom-button"
+          onClick={handleModalOpen}
+          style={{ justifyContent: "flex-end", alignItems: "flex-end" }}
+        >
+          Out json data
+        </button>
+
+        <Modal
+  open={isModalOpen}
+  onClose={handleModalClose}
+  aria-labelledby="modal-modal-title"
+  aria-describedby="modal-modal-description"
+>
+  <Box sx={{ ...style, width: 400 }}>
+    <Typography id="modal-modal-title" variant="h6" component="h2">
+      JSON Data
+    </Typography>
+    <Typography
+      id="modal-modal-description"
+      sx={{ mt: 2, maxHeight: "400px", overflowY: "auto" }}
+    >
+      {/* Render your JSON data here */}
+      <UserRegData />
+    </Typography>
+  </Box>
+</Modal>
+
       </div>
+      {/* <div className="card-variable" style={{ background: "lightgray" }}>
+        <h2>Created Variables</h2>
+        <div className="create_list">
+        <UserRegData/>
+        </div>
+      </div> */}
+      </div>
+  
     </List>
   );
 };
 
 export default Category2;
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+};
