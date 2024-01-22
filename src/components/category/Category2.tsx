@@ -1,9 +1,8 @@
-
-
 import React, { useState } from "react";
 import { useCardContext } from "../context/CardContext";
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import EastIcon from "@mui/icons-material/East";
 
 import "./CardBoxes.css";
 import {
@@ -14,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import CustomCard from "./CustomCardProps";
+import PastOrders from "./PastOrders";
 
 interface DataItem {
   variable: string;
@@ -36,7 +36,17 @@ const transformDataToCategory = (data: DataItem): Category => {
 };
 
 const Category2: React.FC = () => {
-  const { nameCardType, nameNameCard,addressLine1CardName,addressLine2CardName} = useCardContext();
+  const {
+    nameCardType,
+    nameNameCard,
+    addressLine1CardName,
+    addressLine2CardName,
+    cityCardName,
+    zipCodeCardName,
+    birthdayCardName,
+    pastOrderTypeCardName,
+    pastOrderPriceCardName,
+  } = useCardContext();
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
@@ -65,7 +75,11 @@ const Category2: React.FC = () => {
         <ListItemText primary={category.title} />
         {category.subcategories && category.subcategories.length > 0 && (
           <Typography variant="body2">
-            {expandedCategories.includes(category.title) ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
+            {expandedCategories.includes(category.title) ? (
+              <ExpandLessIcon />
+            ) : (
+              <ExpandMoreIcon />
+            )}
           </Typography>
         )}
       </ListItem>
@@ -142,11 +156,11 @@ const Category2: React.FC = () => {
 
   const transformedData: Category[] = newData.map(transformDataToCategory);
 
-  const CardContainer: React.FC<{ selectedCategory: any; type:string; name: string }> = ({
-    selectedCategory,
-    type,
-    name,
-  }) => (
+  const CardContainer: React.FC<{
+    selectedCategory: any;
+    type: string;
+    name: string;
+  }> = ({ selectedCategory, type, name }) => (
     <div className="card-container">
       <div className="card">
         {(() => {
@@ -164,7 +178,7 @@ const Category2: React.FC = () => {
             case "Birthday":
               return <BirthDayCard type={type} name={name} />;
             case "Type":
-              return <PastOrdersTypeCard  />;
+              return <PastOrdersTypeCard />;
             case "Price":
               return <PastOrdersPriceCard />;
             default:
@@ -172,151 +186,98 @@ const Category2: React.FC = () => {
           }
         })()}
       </div>
-     
     </div>
   );
 
-  const NameCard: React.FC<{ type: string; name: string }> = ({ type, name }) => (
-    <CustomCard title="Sadun Perera" cardName="NameCard" type={type} name={name}>
+  const NameCard: React.FC<{ type: string; name: string }> = ({
+    type,
+    name,
+  }) => (
+    <CustomCard
+      title="Sadun Perera"
+      cardName="NameCard"
+      type={type}
+      name={name}
+    >
       {/* Additional content for the NameCard component */}
     </CustomCard>
   );
 
-  const AddressCardOne: React.FC<{ type: string; name: string }> = ({ type, name }) => (
-    <CustomCard title="Madurupitiya" cardName="AddressCardOne" type={type} name={name}>
+  const AddressCardOne: React.FC<{ type: string; name: string }> = ({
+    type,
+    name,
+  }) => (
+    <CustomCard
+      title="Madurupitiya"
+      cardName="AddressCardOne"
+      type={type}
+      name={name}
+    >
       {/* Additional content for the NameCard component */}
     </CustomCard>
   );
-  
-  const AddressCardTwo: React.FC<{ type: string; name: string }> = ({ type, name }) => (
-    <CustomCard title="Loluwagoda" cardName="AddressCardTwo" type={type} name={name}>
-      {/* Additional content for the NameCard component */}
-    </CustomCard>
-  );
-  
 
-  const CityCard: React.FC<{ type: string; name: string }> = ({ type, name }) => (
+  const AddressCardTwo: React.FC<{ type: string; name: string }> = ({
+    type,
+    name,
+  }) => (
+    <CustomCard
+      title="Loluwagoda"
+      cardName="AddressCardTwo"
+      type={type}
+      name={name}
+    >
+      {/* Additional content for the NameCard component */}
+    </CustomCard>
+  );
+
+  const CityCard: React.FC<{ type: string; name: string }> = ({
+    type,
+    name,
+  }) => (
     <CustomCard title="Mirigama" cardName="CityCard" type={type} name={name}>
       {/* Additional content for the NameCard component */}
     </CustomCard>
   );
-  
-  const ZipCodeCard: React.FC<{ type: string; name: string }> = ({ type, name }) => (
+
+  const ZipCodeCard: React.FC<{ type: string; name: string }> = ({
+    type,
+    name,
+  }) => (
     <CustomCard title="11204" cardName="ZipCodeCard" type={type} name={name}>
       {/* Additional content for the NameCard component */}
     </CustomCard>
   );
-  
-  const BirthDayCard: React.FC<{ type: string; name: string }> = ({ type, name }) => (
-    <CustomCard title="1888-07-17" cardName="BirthDayCard" type={type} name={name}>
-      {/* Additional content for the NameCard component */}
-    </CustomCard>
+
+  const BirthDayCard: React.FC<{ type: string; name: string }> = ({
+    type,
+    name,
+  }) => (
+    <CustomCard
+      title="1888-07-17"
+      cardName="BirthDayCard"
+      type={type}
+      name={name} children={undefined}    ></CustomCard>
   );
-  
-
-  
-  
-
- 
- 
 
   const PastOrdersTypeCard: React.FC = () => (
-    <div className="">
-      <div className="input-group">
-        <label>Type:</label>
-        <select>
-          <option value="option1">String</option>
-          <option value="option2">Number</option>
-        </select>
-      </div>
-
-      <table className="custom-table-pastOrder">
-        <thead>
-          <tr>
-            <th>
-              {" "}
-              <input type="text" placeholder="Type" />
-            </th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>cat food</td>
-            <td>100</td>
-          </tr>
-        </tbody>
-      </table>
-      <div className="input-group">
-        <label>Example:</label>
-        <div className="table-wrapper">
-          <table className="custom-table">
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>cat food</td>
-                <td>100</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <button className="custom-button">Save</button>
-    </div>
+    <PastOrders
+      title={""}
+      children={undefined}
+      cardName={"PastOrdersTypeCard"}
+      type={""}
+      name={""}
+    />
   );
 
   const PastOrdersPriceCard: React.FC = () => (
-    <div className="">
-      <div className="input-group">
-        <label>Type:</label>
-        <select>
-          <option value="option1">String</option>
-          <option value="option2">Number</option>
-        </select>
-      </div>
-
-      <table className="custom-table-pastOrder">
-        <thead>
-          <tr>
-            <th>
-              Type
-            </th>
-            <th><input type="text" placeholder="Price" /></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>cat food</td>
-            <td>100</td>
-          </tr>
-        </tbody>
-      </table>
-      <div className="input-group">
-        <label>Example:</label>
-        <div className="table-wrapper">
-          <table className="custom-table">
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>cat food</td>
-                <td>100</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <button className="custom-button">Save</button>
-    </div>
+    <PastOrders
+      title={""}
+      children={undefined}
+      cardName={"PastOrdersPriceCard"}
+      type={""}
+      name={""}
+    />
   );
 
   return (
@@ -325,19 +286,33 @@ const Category2: React.FC = () => {
         <div className="card">{transformedData.map(renderCategory)}</div>
         <div className="card" style={{ background: "lightgray" }}>
           <h2>{selectedCategory}</h2>
-          <CardContainer selectedCategory={selectedCategory} type={""} name={""} />
+          <CardContainer
+            selectedCategory={selectedCategory}
+            type={""}
+            name={""}
+          />
         </div>
       </div>
       <div className="card-variable" style={{ background: "lightgray" }}>
-          <h2>Created Variables</h2>
-          <div className="create_list">
-     
-      {nameNameCard}<br/>
-      {addressLine1CardName}<br/>
-      {addressLine2CardName}
-      {/* Rest of your Category2 component */}
-    </div>
+        <h2>Created Variables</h2>
+        <div className="create_list">
+          {nameNameCard}
+          <br />
+          {addressLine1CardName}
+          <br />
+          {addressLine2CardName}
+          <br />
+          {cityCardName}
+          <br />
+          {zipCodeCardName}
+          <br />
+          {birthdayCardName}
+          <br />
+          {pastOrderTypeCardName}
+          <br />
+          {pastOrderPriceCardName}
         </div>
+      </div>
     </List>
   );
 };

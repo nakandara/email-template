@@ -4,7 +4,7 @@ import { useCardContext } from "../context/CardContext";
 interface CustomCardProps {
   title: string;
   children: ReactNode;
-  cardName: any;
+  cardName: "NameCard" | "AddressCardOne" | "AddressCardTwo"| 'BirthDayCard'|"ZipCodeCard" |'CityCard';
   type: string;
   name: string;
 }
@@ -23,29 +23,48 @@ const CustomCard: React.FC<CustomCardProps> = ({
     setAddressLine1CardName,
     setAddressLine2CardType,
     setAddressLine2CardName,
+    setCityCardName,
+    setCityCardType,
+    setZipCodeCardName,
+    setZipCodeCardType,
+    setBirthdayCardName,
+    setBirthdayCardType,
+    
   } = useCardContext();
   const [type, setType] = useState("");
   const [name, setName] = useState("");
-  const handleSave = () => {
-    console.log("Type:", type);
-    console.log("Name:", name);
-    console.log("cardName:", cardName);
+
+
+ const handleSave = () => {
+   
+
+    const setTypeAndName = (setTypeFn: Function, setNameFn: Function) => {
+      setTypeFn(type);
+      setNameFn(name);
+    };
 
     switch (cardName) {
       case "NameCard":
-        setNameCardType(type);
-        setNameNameCard(name);
-
+        setTypeAndName(setNameCardType, setNameNameCard);
         break;
       case "AddressCardOne":
-        setAddressLine1CardType(type);
-        setAddressLine1CardName(name);
+        setTypeAndName(setAddressLine1CardType, setAddressLine1CardName);
         break;
       case "AddressCardTwo":
-        setAddressLine2CardType(type);
-        setAddressLine2CardName(name);
+        setTypeAndName(setAddressLine2CardType, setAddressLine2CardName);
         break;
-      // Add other cases as needed
+      case "CityCard":
+        setTypeAndName(setCityCardType, setCityCardName);
+        break;
+      case "ZipCodeCard":
+          setTypeAndName(setZipCodeCardType, setZipCodeCardName);
+          break;   
+      case "BirthDayCard":
+            setTypeAndName(setBirthdayCardType, setBirthdayCardName);
+            break;
+      // case "PastOrdersTypeCard":
+      //       setTypeAndName(setPastOrderTypeCardType, setPastOrderTypeCardName);
+      //       break;  
       default:
         console.log("Select Options");
     }
