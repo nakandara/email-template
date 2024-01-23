@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useCardContext } from "../context/CardContext";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import EastIcon from "@mui/icons-material/East";
-
+import { transformPayloadToData } from "../data/transformPayloadToData";
+import { payloadData } from "../data/PayloadData";
 import "./CardBoxes.css";
 import {
   List,
@@ -18,12 +18,27 @@ import CustomCard from "./CustomCardProps";
 import PastOrders from "./PastOrders";
 import UserRegData from "../data/UserRegData";
 
+
+
+
 interface DataItem {
   variable: string;
   example?: any;
   type: string;
   itemType?: string;
   itemKeys?: DataItem[];
+}
+
+interface Order {
+  type: string;
+  price: number;
+}
+
+interface Address {
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  zipCode: string;
 }
 
 interface Category {
@@ -106,63 +121,10 @@ const Category2: React.FC = () => {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
-  const newData: DataItem[] = [
-    {
-      variable: "Name",
-      example: "Ruwan",
-      type: "string",
-    },
-    {
-      variable: "Address",
-      example: null,
-      type: "object",
-      itemKeys: [
-        {
-          variable: "Address Line 1",
-          example: "Madurupitiya",
-          type: "string",
-        },
-        {
-          variable: "Address Line 2",
-          example: "Loluwagoda",
-          type: "string",
-        },
-        {
-          variable: "City",
-          example: "Mirigama",
-          type: "string",
-        },
-        {
-          variable: "Zip Code",
-          example: "11204",
-          type: "string",
-        },
-      ],
-    },
-    {
-      variable: "Birthday",
-      example: "1888-07-17T00:00:00.000Z",
-      type: "date",
-    },
-    {
-      variable: "Past Orders",
-      example: null,
-      type: "array",
-      itemType: "object",
-      itemKeys: [
-        {
-          variable: "Type",
-          example: "cat food",
-          type: "string",
-        },
-        {
-          variable: "Price",
-          example: 100,
-          type: "number",
-        },
-      ],
-    },
-  ];
+
+ 
+
+  const newData: DataItem[] = transformPayloadToData(payloadData[0]);
 
   const transformedData: Category[] = newData.map(transformDataToCategory);
 
@@ -177,13 +139,13 @@ const Category2: React.FC = () => {
           switch (selectedCategory) {
             case "Name":
               return <NameCard type={type} name={name} />;
-            case "Address Line 1":
+            case "AddressLine1":
               return <AddressCardOne type={type} name={name} />;
-            case "Address Line 2":
+            case "AddressLine2":
               return <AddressCardTwo type={type} name={name} />;
             case "City":
               return <CityCard type={type} name={name} />;
-            case "Zip Code":
+            case "ZipCode":
               return <ZipCodeCard type={type} name={name} />;
             case "Birthday":
               return <BirthDayCard type={type} name={name} />;
@@ -208,9 +170,8 @@ const Category2: React.FC = () => {
       cardName="NameCard"
       type={type}
       name={name}
-    >
-      {/* Additional content for the NameCard component */}
-    </CustomCard>
+      children={undefined}
+    />
   );
 
   const AddressCardOne: React.FC<{ type: string; name: string }> = ({
@@ -222,9 +183,8 @@ const Category2: React.FC = () => {
       cardName="AddressCardOne"
       type={type}
       name={name}
-    >
-      {/* Additional content for the NameCard component */}
-    </CustomCard>
+      children={undefined}
+    />
   );
 
   const AddressCardTwo: React.FC<{ type: string; name: string }> = ({
@@ -236,27 +196,34 @@ const Category2: React.FC = () => {
       cardName="AddressCardTwo"
       type={type}
       name={name}
-    >
-      {/* Additional content for the NameCard component */}
-    </CustomCard>
+      children={undefined}
+    />
   );
 
   const CityCard: React.FC<{ type: string; name: string }> = ({
     type,
     name,
   }) => (
-    <CustomCard title="Mirigama" cardName="CityCard" type={type} name={name}>
-      {/* Additional content for the NameCard component */}
-    </CustomCard>
+    <CustomCard
+      title="Mirigama"
+      cardName="CityCard"
+      type={type}
+      name={name}
+      children={undefined}
+    />
   );
 
   const ZipCodeCard: React.FC<{ type: string; name: string }> = ({
     type,
     name,
   }) => (
-    <CustomCard title="11204" cardName="ZipCodeCard" type={type} name={name}>
-      {/* Additional content for the NameCard component */}
-    </CustomCard>
+    <CustomCard
+      title="11204"
+      cardName="ZipCodeCard"
+      type={type}
+      name={name}
+      children={undefined}
+    />
   );
 
   const BirthDayCard: React.FC<{ type: string; name: string }> = ({
@@ -267,7 +234,9 @@ const Category2: React.FC = () => {
       title="1888-07-17"
       cardName="BirthDayCard"
       type={type}
-      name={name} children={undefined}    ></CustomCard>
+      name={name}
+      children={undefined}
+    />
   );
 
   const PastOrdersTypeCard: React.FC = () => (
@@ -303,63 +272,54 @@ const Category2: React.FC = () => {
           />
         </div>
       </div>
-      <div >
-      <div className="card-variable" style={{ background: "lightgray" }}>
-        <h2>Created Variables</h2>
-        <div className="create_list">
-          {nameNameCard}
-          <br />
-          {addressLine1CardName}
-          <br />
-          {addressLine2CardName}
-          <br />
-          {cityCardName}
-          <br />
-          {zipCodeCardName}
-          <br />
-          {birthdayCardName}
-          <br />
-          {pastOrderTypeCardName}
-          <br />
-          {pastOrderPriceCardName}
-        </div>
-        <button
-          className="custom-button"
-          onClick={handleModalOpen}
-          style={{ justifyContent: "flex-end", alignItems: "flex-end" }}
-        >
-          Out json data
-        </button>
+      <div>
+        <div className="card-variable" style={{ background: "lightgray" }}>
+          <h2>Created Variables</h2>
+          <div className="create_list">
+            {nameNameCard}
+            <br />
+            {addressLine1CardName}
+            <br />
+            {addressLine2CardName}
+            <br />
+            {cityCardName}
+            <br />
+            {zipCodeCardName}
+            <br />
+            {birthdayCardName}
+            <br />
+            {pastOrderTypeCardName}
+            <br />
+            {pastOrderPriceCardName}
+          </div>
+          <button
+            className="custom-button"
+            onClick={handleModalOpen}
+            style={{ justifyContent: "flex-end", alignItems: "flex-end" }}
+          >
+            Out json data
+          </button>
 
-        <Modal
-  open={isModalOpen}
-  onClose={handleModalClose}
-  aria-labelledby="modal-modal-title"
-  aria-describedby="modal-modal-description"
->
-  <Box sx={{ ...style, width: 400 }}>
-    <Typography id="modal-modal-title" variant="h6" component="h2">
-      JSON Data
-    </Typography>
-    <Typography
-      id="modal-modal-description"
-      sx={{ mt: 2, maxHeight: "400px", overflowY: "auto" }}
-    >
-      {/* Render your JSON data here */}
-      <UserRegData />
-    </Typography>
-  </Box>
-</Modal>
-
-      </div>
-      {/* <div className="card-variable" style={{ background: "lightgray" }}>
-        <h2>Created Variables</h2>
-        <div className="create_list">
-        <UserRegData/>
+          <Modal
+            open={isModalOpen}
+            onClose={handleModalClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={{ ...style, width: 400 }}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                JSON Data
+              </Typography>
+              <Typography
+                id="modal-modal-description"
+                sx={{ mt: 2, maxHeight: "400px", overflowY: "auto" }}
+              >
+                <UserRegData />
+              </Typography>
+            </Box>
+          </Modal>
         </div>
-      </div> */}
       </div>
-  
     </List>
   );
 };

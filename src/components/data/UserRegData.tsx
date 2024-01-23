@@ -150,9 +150,13 @@ const UserRegData = () => {
 
   const jsonData = JSON.stringify(newData, null, 2);
 
-  return <div> <pre>
-  <code>{jsonData}</code>
-</pre></div>;
+  return (
+    <div>
+      <pre>
+        <code>{jsonData}</code>
+      </pre>
+    </div>
+  );
 };
 
 export default UserRegData;
