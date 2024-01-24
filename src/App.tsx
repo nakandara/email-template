@@ -5,19 +5,23 @@ import DashboardHome from "./components/Home";
 import  DashboardSelectEvents from "./components/SelectEvents";
 import  Category1 from "./components/category/category1";
 import  Category2 from "./components/category/Category2";
+import DrawerAppBar from "./components/layout/DrawerAppBar";
+
 
 function App() {
   return (
     <Router>
-    <div style={{ display: 'flex'}}  >
-      <Sidebar  />
-      <div style={{ flex: 1 ,border: '1px solid #ccc',marginLeft:"300px"}}>
-        <Routes>
+    <div   >
+    
+    <DrawerAppBar/>
+      {/* <Sidebar  /> */}
+      <div >
+        {/* <Routes>
           <Route path="/dashboard" element={<DashboardHome />} />
           <Route path="/dashboard/about" element={<DashboardSelectEvents />} />
           <Route path="/dashboard/category1" element={<Category1 />} />
           <Route path="/dashboard/category2" element={<Category2 />} />
-        </Routes>
+        </Routes> */}
       </div>
     </div>
   </Router>
