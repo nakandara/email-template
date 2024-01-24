@@ -15,6 +15,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Link } from 'react-router-dom';
+import AttachEmailIcon from '@mui/icons-material/AttachEmail';
 
 import DashboardHome from "../../components/Home";
 import DashboardSelectEvents from "../../components/SelectEvents";
@@ -43,7 +44,7 @@ export default function DrawerAppBar(props: Props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+        <AttachEmailIcon/>
       </Typography>
       <Divider />
       <List>
