@@ -20,6 +20,9 @@ interface CardContextProps {
   pastOrderPriceCardName:string
   pastOrderPriceCardType:string
 
+  totalGuestsCardName:string
+  totalGuestsCardType:string
+
   setNameCardType: (type: string) => void;
   setNameNameCard: (name: string) => void;
   setAddressLine1CardType: (type: string) => void;
@@ -40,6 +43,9 @@ interface CardContextProps {
 
   setPastOrderPriceCardName:(name:string) => void;
   setPastOrderPriceCardType:(name:string) => void;
+
+  setTotalGuestsCardName:(name:string) => void;
+  setTotalGuestsCardType:(name:string) => void;
 }
 
 const CardContext = createContext<CardContextProps | undefined>(undefined);
@@ -71,6 +77,9 @@ export const CardProvider: React.FC<{ children: ReactNode }> = ({
 
   const [pastOrderPriceCardName, setPastOrderPriceCardName] = useState("");
   const [pastOrderPriceCardType, setPastOrderPriceCardType] = useState("");
+
+  const [totalGuestsCardName, setTotalGuestsCardName] = useState("");
+  const [totalGuestsCardType, setTotalGuestsCardType] = useState("");
 
   return (
     <CardContext.Provider
@@ -106,7 +115,11 @@ export const CardProvider: React.FC<{ children: ReactNode }> = ({
         pastOrderPriceCardName,
         pastOrderPriceCardType,
         setPastOrderPriceCardName,
-        setPastOrderPriceCardType
+        setPastOrderPriceCardType,
+        totalGuestsCardName,
+        totalGuestsCardType,
+        setTotalGuestsCardName,
+        setTotalGuestsCardType
       }}
     >
       {children}

@@ -3,7 +3,12 @@ import { useCardContext } from "../context/CardContext";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { transformPayloadToData } from "../data/transformPayloadToData";
-import { payloadData } from "../data/PayloadData";
+import {
+  payloadData,
+  payloadEvent,
+  payloadOrder,
+  payloadUser,
+} from "../data/PayloadData";
 import "./CardBoxes.css";
 import {
   List,
@@ -17,9 +22,6 @@ import {
 import CustomCard from "./CustomCardProps";
 import PastOrders from "./PastOrders";
 import UserRegData from "../data/UserRegData";
-
-
-
 
 interface DataItem {
   variable: string;
@@ -122,9 +124,10 @@ const Category2: React.FC = () => {
     setIsModalOpen(false);
   };
 
- 
+  const newData: DataItem[] = transformPayloadToData(payloadEvent[0]);
+  console.log(newData);
 
-  const newData: DataItem[] = transformPayloadToData(payloadData[0]);
+  const jsonData = JSON.stringify(newData, null, 2);
 
   const transformedData: Category[] = newData.map(transformDataToCategory);
 
@@ -137,22 +140,24 @@ const Category2: React.FC = () => {
       <div className="card">
         {(() => {
           switch (selectedCategory) {
-            case "Name":
+            case "name":
               return <NameCard type={type} name={name} />;
-            case "AddressLine1":
+            case "addressLine1":
               return <AddressCardOne type={type} name={name} />;
-            case "AddressLine2":
+            case "addressLine2":
               return <AddressCardTwo type={type} name={name} />;
-            case "City":
+            case "city":
               return <CityCard type={type} name={name} />;
-            case "ZipCode":
+            case "zipCode":
               return <ZipCodeCard type={type} name={name} />;
-            case "Birthday":
+            case "birthday":
               return <BirthDayCard type={type} name={name} />;
-            case "Type":
+            case "type":
               return <PastOrdersTypeCard />;
-            case "Price":
+            case "price":
               return <PastOrdersPriceCard />;
+            case "totalGuests":
+              return <TotalGuestsCard type={""} name={""} />;
             default:
               return "Select Options";
           }
@@ -259,6 +264,18 @@ const Category2: React.FC = () => {
     />
   );
 
+  const TotalGuestsCard: React.FC<{ type: string; name: string }> = ({
+    type,
+    name,
+  }) => (
+    <CustomCard
+      title="1888-07-17"
+      cardName="TotalGuestsCard"
+      type={type}
+      name={name}
+      children={undefined}
+    />
+  );
   return (
     <List>
       <div className="card-container">
@@ -319,7 +336,13 @@ const Category2: React.FC = () => {
             </Box>
           </Modal>
         </div>
+        {/* <div>
+          <pre>
+            <code>{jsonData}</code>
+          </pre>
+        </div> */}
       </div>
+      
     </List>
   );
 };

@@ -4,7 +4,14 @@ import { useCardContext } from "../context/CardContext";
 interface CustomCardProps {
   title: string;
   children: ReactNode;
-  cardName: "NameCard" | "AddressCardOne" | "AddressCardTwo"| 'BirthDayCard'|"ZipCodeCard" |'CityCard';
+  cardName:
+    | "NameCard"
+    | "AddressCardOne"
+    | "AddressCardTwo"
+    | "BirthDayCard"
+    | "ZipCodeCard"
+    | "CityCard"
+    | "TotalGuestsCard";
   type: string;
   name: string;
 }
@@ -29,15 +36,13 @@ const CustomCard: React.FC<CustomCardProps> = ({
     setZipCodeCardType,
     setBirthdayCardName,
     setBirthdayCardType,
-    
+    setTotalGuestsCardName,
+    setTotalGuestsCardType,
   } = useCardContext();
   const [type, setType] = useState("");
   const [name, setName] = useState("");
 
-
- const handleSave = () => {
-   
-
+  const handleSave = () => {
     const setTypeAndName = (setTypeFn: Function, setNameFn: Function) => {
       setTypeFn(type);
       setNameFn(name);
@@ -57,14 +62,14 @@ const CustomCard: React.FC<CustomCardProps> = ({
         setTypeAndName(setCityCardType, setCityCardName);
         break;
       case "ZipCodeCard":
-          setTypeAndName(setZipCodeCardType, setZipCodeCardName);
-          break;   
+        setTypeAndName(setZipCodeCardType, setZipCodeCardName);
+        break;
       case "BirthDayCard":
-            setTypeAndName(setBirthdayCardType, setBirthdayCardName);
-            break;
-      // case "PastOrdersTypeCard":
-      //       setTypeAndName(setPastOrderTypeCardType, setPastOrderTypeCardName);
-      //       break;  
+        setTypeAndName(setBirthdayCardType, setBirthdayCardName);
+        break;
+      case "TotalGuestsCard":
+        setTypeAndName(setTotalGuestsCardType, setTotalGuestsCardName);
+        break;
       default:
         console.log("Select Options");
     }

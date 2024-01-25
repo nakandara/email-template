@@ -14,13 +14,14 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Link } from 'react-router-dom';
-import AttachEmailIcon from '@mui/icons-material/AttachEmail';
+import { Link } from "react-router-dom";
+import AttachEmailIcon from "@mui/icons-material/AttachEmail";
 
 import DashboardHome from "../../components/Home";
 import DashboardSelectEvents from "../../components/SelectEvents";
 import Category1 from "../../components/category/category1";
 import Category2 from "../../components/category/Category2";
+import SelectPayload from "../template/SelectPayload";
 
 interface Props {
   /**
@@ -31,7 +32,9 @@ interface Props {
 }
 
 const drawerWidth = 240;
-const navItems = ["Home", "About", "Contact",'UserReg'];
+const navItems = ["Home", "About", "Contact"];
+const navItemsSideBar = ["UserReg",'Home',"Template"];
+
 
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
@@ -44,19 +47,23 @@ export default function DrawerAppBar(props: Props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        <AttachEmailIcon/>
+        <AttachEmailIcon />
       </Typography>
       <Divider />
       <List>
-      {navItems.map((item) => (
-        <Link key={item} to={`/dashboard/${item.toLowerCase()}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        </Link>
-      ))}
+        {navItemsSideBar.map((item) => (
+          <Link
+            key={item}
+            to={`/${item.toLowerCase()}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <ListItem disablePadding>
+              <ListItemButton sx={{ textAlign: "center" }}>
+                <ListItemText primary={item} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        ))}
       </List>
     </Box>
   );
@@ -111,10 +118,10 @@ export default function DrawerAppBar(props: Props) {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, 
+            keepMounted: true,
           }}
           sx={{
-            display: { xs: "block", sm: "block" }, 
+            display: { xs: "block", sm: "block" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
@@ -126,16 +133,16 @@ export default function DrawerAppBar(props: Props) {
       </nav>
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
-
         <div>
           <Routes>
-            <Route path="/dashboard/home" element={<DashboardHome />} />
+            <Route path="/home" element={<DashboardHome/>} />
+            <Route path="/template" element={<SelectPayload/>} />
             <Route
               path="/dashboard/about"
               element={<DashboardSelectEvents />}
             />
             <Route path="/dashboard/category1" element={<Category1 />} />
-            <Route path="/dashboard/UserReg" element={<Category2 />} />
+            <Route path="/UserReg" element={<Category2 />} />
           </Routes>
         </div>
       </Box>
