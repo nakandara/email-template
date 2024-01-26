@@ -41,15 +41,106 @@
     background-color: #ddd;
     z-index: -1;
   }
-  
+  .fixed-header {
+    position: fixed;
+    padding-top: 70px;
+    top: 10px;
+    left: 0;
+    width: 100%;
+    background-color: #fff; /* Adjust background color as needed */
+    z-index: 1000; /* Set z-index higher than other elements if needed */
+  }
 
   .template_card{
-    border: 2px solid #560666;
+    /* border: 2px solid #560666; */
    padding: 10px;
-    height: 100vh;
+    height: 150vh;
     width: 100%;
+    margin-top: 10%;
+  }
+
+  .step_button{
+   left: 1000px;
+   border: 2px solid #560666;
+  padding: 5px;
   }
 
   .template_content{
-    margin-bottom: 300px;
+    margin-bottom: 118px;
+  }
+
+  
+  .card-container {
+    display: flex;
+    justify-content: center;
+  
+  }
+  
+  .card {
+    border: 1px solid #ddd;
+    padding: 10px;
+   
+  }
+  
+  .ul-class {
+    list-style: none;
+    
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px; /* Adjust the gap between items as needed */
+  }
+  
+  .cardItem {
+    border: 1px solid #ccc;
+    width: 80%;
+    margin-left: 15%;
+    padding: 10px;
+    text-align: center;
+    height: 25vh;
+    border-radius: 50px;
+    background-color: rgb(48, 145, 104);
+    position: relative;
+    border: 1px solid #ccc;
+  
+  }
+  
+  .button-container {
+    position: absolute;
+    bottom: 50px;
+    right: 100px;
+   
+   
+  }
+  .button-container button {
+   
+    font-size: 14px;
+  }
+
+  @media (max-width: 625px) {
+   
+    .button-container {
+      position: absolute;
+      bottom: 25px;
+      right: 50px;
+     
+     
+    }
+    .ul-class {
+      list-style: none;
+      
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      grid-gap: 10px; /* Adjust the gap between items as needed */
+    }
+    
+  }
+
+  .item-heading{
+    font-size: 25px;
+    color: #fff;
+    font-weight: 700;
   }

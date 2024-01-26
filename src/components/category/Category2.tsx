@@ -124,7 +124,7 @@ const Category2: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const newData: DataItem[] = transformPayloadToData(payloadEvent[0]);
+  const newData: DataItem[] = transformPayloadToData(payloadData[0]);
   console.log(newData);
 
   const jsonData = JSON.stringify(newData, null, 2);
