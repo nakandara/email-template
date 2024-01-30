@@ -22,6 +22,7 @@ import DashboardSelectEvents from "../../components/SelectEvents";
 import Category1 from "../../components/category/category1";
 import Category2 from "../../components/category/Category2";
 import SelectPayload from "../template/SelectPayload";
+import Footer from "./Footer";
 
 interface Props {
   /**
@@ -145,7 +146,9 @@ export default function DrawerAppBar(props: Props) {
             <Route path="/UserReg" element={<Category2 />} />
           </Routes>
         </div>
+        
       </Box>
+      <Footer/>
     </Box>
   );
 }
