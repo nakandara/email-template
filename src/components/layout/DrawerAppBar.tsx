@@ -137,6 +137,7 @@ export default function DrawerAppBar(props: Props) {
         <div>
           <Routes>
             <Route path="/home" element={<DashboardHome/>} />
+            <Route path="/" element={<DashboardHome/>} />
             <Route path="/template" element={<SelectPayload/>} />
             <Route
               path="/dashboard/about"
@@ -148,7 +149,7 @@ export default function DrawerAppBar(props: Props) {
         </div>
         
       </Box>
-      <Footer/>
+      
     </Box>
   );
 }

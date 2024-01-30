@@ -6,14 +6,15 @@ import  DashboardSelectEvents from "./components/SelectEvents";
 import  Category1 from "./components/category/category1";
 import  Category2 from "./components/category/Category2";
 import DrawerAppBar from "./components/layout/DrawerAppBar";
+import Footer from "./components/layout/Footer";
 
 
 function App() {
   return (
     <Router>
-    <div   >
-    
+    <div>
     <DrawerAppBar/>
+    <Footer/>
       {/* <Sidebar  /> */}
       <div >
         {/* <Routes>
@@ -23,6 +24,7 @@ function App() {
           <Route path="/dashboard/category2" element={<Category2 />} />
         </Routes> */}
       </div>
+      
     </div>
   </Router>
   );
