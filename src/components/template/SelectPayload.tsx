@@ -6,10 +6,22 @@ import Typography from "@mui/material/Typography";
 import CustomizedSteppers from "../linearSteps/CustomizedSteppers";
 import "./Template.css";
 import PayloadList from "./PayloadList";
+import { useCardContext } from "../context/CardContext";
 import Category2 from "../category/Category2";
 import { useState } from "react";
 
+const steps = [
+  "Select campaign settings",
+  "Create an ad group",
+  "Create an ad",
+];
+
+
+
 const Item = styled(Paper)(({ theme }) => ({
+
+  
+  
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
   padding: theme.spacing(1),
@@ -19,8 +31,13 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const SelectPayload = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const {
+    payLoadData
+  } = useCardContext();
 
-  console.log(activeStep);
+  console.log(activeStep,'tttttttttttt');
+
+
 
   return (
     <div className="template_card">
@@ -35,8 +52,11 @@ const SelectPayload = () => {
           <Grid container spacing={2}>
             <Grid xs={12}>
               <Item>
-                {activeStep !== 0 && <Category2 />}
-                {activeStep < 2 - 1 && <PayloadList />}
+              {payLoadData === "EVENT" &&  <Category2 payload={"EVENT"} />}
+              {payLoadData === "ORDER" && <Category2 payload={"ORDER"} />}
+              {payLoadData === "USER" && <Category2 payload={"USER"} />}
+
+                {payLoadData === "FIRST" && <PayloadList />}
               </Item>
             </Grid>
           </Grid>

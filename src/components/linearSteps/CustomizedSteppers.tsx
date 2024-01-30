@@ -13,6 +13,7 @@ import StepConnector, {
   stepConnectorClasses,
 } from "@mui/material/StepConnector";
 import { StepIconProps } from "@mui/material/StepIcon";
+import { useCardContext } from "../context/CardContext";
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -104,8 +105,28 @@ const CustomizedSteppers: React.FC<CustomCardProps> = ({
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
+  const { payLoadData ,setPayLoadData} = useCardContext();
+
+  const getActiveStep = () => {
+    switch (payLoadData) {
+      case "EVENT":
+      case "ORDER":
+      case "USER":
+        return 1; // "Create an ad group"
+      case "FIRST":
+      default:
+        return 0; // "Select campaign settings"
+    }
+  };
+
+  // Set the active step based on the value of payLoadData
+  React.useEffect(() => {
+    setActiveStep(getActiveStep());
+  }, [payLoadData, setActiveStep]);
+
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setPayLoadData("FIRST")
   };
 
   return (
@@ -128,11 +149,11 @@ const CustomizedSteppers: React.FC<CustomCardProps> = ({
               Back
             </Button>
           )}
-          {activeStep < steps.length - 1 && (
+          {/* {activeStep < steps.length - 1 && (
             <Button variant="contained" onClick={handleNext}>
               Next
             </Button>
-          )}
+          )} */}
         </div>
       </Stack>
     </Stack>

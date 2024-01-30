@@ -55,7 +55,7 @@ const transformDataToCategory = (data: DataItem): Category => {
   };
 };
 
-const Category2: React.FC = () => {
+const Category2: React.FC<{ payload?: string }> = ({payload}) => {
   const {
     nameCardType,
     nameNameCard,
@@ -83,6 +83,8 @@ const Category2: React.FC = () => {
     }
   };
 
+
+  
   const renderCategory = (category: Category) => (
     <div key={category.title}>
       <ListItem
@@ -124,7 +126,20 @@ const Category2: React.FC = () => {
     setIsModalOpen(false);
   };
 
+  let payloadDataT;
+  if (payload === "EVENT") {
+    payloadDataT = payloadEvent[0];
+  } else if (payload === "ORDER") {
+    payloadDataT = payloadOrder[0];
+  }  else if (payload === "DATA") {
+    payloadDataT = payloadData[0];
+  }
+  else if (payload === "USER") {
+    payloadDataT = payloadUser[0];
+  }
+
   const newData: DataItem[] = transformPayloadToData(payloadData[0]);
+  console.log(newData);
   console.log(newData);
 
   const jsonData = JSON.stringify(newData, null, 2);

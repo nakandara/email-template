@@ -1,11 +1,13 @@
 import { useState } from "react";
 import "./Template.css";
 import Button from "@mui/material/Button";
+import { useCardContext } from "../context/CardContext";
 import { Box, Modal, Typography } from "@mui/material";
 
 const sampleItems = ["EVENT", "USER", "ORDER", "Item 4"];
 
 const EventModalContent = () => {
+  
   return (
     <>
       <Typography variant="body1">ID: #223033</Typography>
@@ -54,15 +56,20 @@ const OrderModalContent = () => {
   );
 };
 
-
 const PayloadList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState('');
+  const [selectedItem, setSelectedItem] = useState("");
+  const {
+    setPayLoadData
+  } = useCardContext();
 
-  const handleModalOpen = (item:any) => {
+  const handleModalOpen = (event: React.MouseEvent<HTMLButtonElement>, item: any) => {
+    // Prevent the event from propagating to the parent element
+    event.stopPropagation();
     setSelectedItem(item);
     setIsModalOpen(true);
   };
+  
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -70,7 +77,7 @@ const PayloadList = () => {
 
   const renderModalContent = () => {
     console.log(selectedItem);
-    
+
     switch (selectedItem) {
       case "EVENT":
         return <EventModalContent />;
@@ -84,16 +91,21 @@ const PayloadList = () => {
     }
   };
 
+  const NextStep = (item: any) => {
+    console.log(item);
+    setPayLoadData(item)
+  };
+
   return (
     <div className="card-container">
       <div className="card">
         <ul className="ul-class">
           {sampleItems.map((item, index) => (
-            <li className="cardItem" key={index}>
+            <li className="cardItem" onClick={() => NextStep(item)} key={index}>
               <div className="item-heading"> {item}</div>
               <div className="button-container">
                 <Button
-                  onClick={() => handleModalOpen(item)}
+                 onClick={(event) => handleModalOpen(event, item)}
                   sx={{ backgroundColor: "blue", borderRadius: "100px" }}
                   variant="contained"
                   color="success"

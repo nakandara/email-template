@@ -23,6 +23,8 @@ interface CardContextProps {
   totalGuestsCardName:string
   totalGuestsCardType:string
 
+  payLoadData:string
+
   setNameCardType: (type: string) => void;
   setNameNameCard: (name: string) => void;
   setAddressLine1CardType: (type: string) => void;
@@ -33,19 +35,22 @@ interface CardContextProps {
   setCityCardType:(name:string) => void;
 
   setZipCodeCardName:(name:string) => void;
-  setZipCodeCardType:(name:string) => void;
+  setZipCodeCardType:(type:string) => void;
 
   setBirthdayCardName:(name:string) => void;
-  setBirthdayCardType:(name:string) => void;
+  setBirthdayCardType:(type:string) => void;
 
   setPastOrderTypeCardName:(name:string) => void;
-  setPastOrderTypeCardType:(name:string) => void;
+  setPastOrderTypeCardType:(type:string) => void;
 
   setPastOrderPriceCardName:(name:string) => void;
-  setPastOrderPriceCardType:(name:string) => void;
+  setPastOrderPriceCardType:(type:string) => void;
 
   setTotalGuestsCardName:(name:string) => void;
-  setTotalGuestsCardType:(name:string) => void;
+  setTotalGuestsCardType:(type:string) => void;
+
+
+  setPayLoadData:(item:any) => void;
 }
 
 const CardContext = createContext<CardContextProps | undefined>(undefined);
@@ -80,6 +85,8 @@ export const CardProvider: React.FC<{ children: ReactNode }> = ({
 
   const [totalGuestsCardName, setTotalGuestsCardName] = useState("");
   const [totalGuestsCardType, setTotalGuestsCardType] = useState("");
+
+  const [payLoadData, setPayLoadData] = useState("FIRST");
 
   return (
     <CardContext.Provider
@@ -119,7 +126,9 @@ export const CardProvider: React.FC<{ children: ReactNode }> = ({
         totalGuestsCardName,
         totalGuestsCardType,
         setTotalGuestsCardName,
-        setTotalGuestsCardType
+        setTotalGuestsCardType,
+        setPayLoadData,
+        payLoadData
       }}
     >
       {children}
