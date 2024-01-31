@@ -143,17 +143,16 @@ const CustomizedSteppers: React.FC<CustomCardProps> = ({
         ))}
       </Stepper>
       <Stack direction="row" spacing={2} justifyContent="flex-end">
-        <div className="step_button">
+        <div >
           {activeStep !== 0 && (
-            <Button variant="contained" onClick={handleBack}>
+            <div className="step_button">
+              <Button  variant="contained" onClick={handleBack}>
               Back
             </Button>
+            </div>
+            
           )}
-          {/* {activeStep < steps.length - 1 && (
-            <Button variant="contained" onClick={handleNext}>
-              Next
-            </Button>
-          )} */}
+        
         </div>
       </Stack>
     </Stack>
