@@ -93,17 +93,24 @@
   }
   
   .cardItem {
-    border: 1px solid #ccc;
+    border: 2px solid #5a0e0e;
     width: 80%;
     margin-left: 15%;
     padding: 10px;
     text-align: center;
     height: 25vh;
-    border-radius: 50px;
-    background-color: rgb(48, 145, 104);
+    overflow: hidden;
+   background-color: #d0dfe2;
+    
     position: relative;
     border: 1px solid #ccc;
+    box-shadow: 10px 4px 10px rgba(0, 0, 0, 0.1);
   
+  }
+
+  .horizontal-line {
+    border-top: 2px solid #ccc; /* Adjust the color and thickness as needed */
+    margin: 20px 0; /* Adjust the margin to control the spacing around the line */
   }
   
   .button-container {
@@ -141,6 +148,8 @@
 
   .item-heading{
     font-size: 25px;
-    color: #fff;
+    color: #2f3432;
+    font-family: 'Open Sans', 'PF DinText Pro', Arial, Helvetica, sans-serif;
+    line-height: 1.71428571;
     font-weight: 700;
   }

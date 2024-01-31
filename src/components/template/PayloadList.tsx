@@ -103,7 +103,10 @@ const PayloadList = () => {
           {sampleItems.map((item, index) => (
             <li className="cardItem" onClick={() => NextStep(item)} key={index}>
               <div className="item-heading"> {item}</div>
+              <div className="horizontal-line"></div>
+              <div>This way, the card will adapt its size based on the screen width,</div>
               <div className="button-container">
+               
                 <Button
                  onClick={(event) => handleModalOpen(event, item)}
                   sx={{ backgroundColor: "blue", borderRadius: "100px" }}
