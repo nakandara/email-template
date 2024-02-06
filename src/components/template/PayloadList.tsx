@@ -56,6 +56,22 @@ const OrderModalContent = () => {
   );
 };
 
+const DataModalContent = () => {
+  return (
+    <>
+      <Typography variant="body1">ID: #223033</Typography>
+      <Typography variant="body1">Total Price: 4000</Typography>
+      <Typography variant="body1">Payment Method: BANK_TRANSFER</Typography>
+      <Typography variant="body1">Items:</Typography>
+      <ul>
+        <li>HB Pencil - Quantity: 20, Unit Price: 100</li>
+        <li>Blue Pencil - Quantity: 10, Unit Price: 50</li>
+        <li>Red Pencil - Quantity: 20, Unit Price: 70</li>
+      </ul>
+    </>
+  );
+};
+
 const PayloadList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
@@ -85,6 +101,8 @@ const PayloadList = () => {
         return <UserModalContent />;
       case "ORDER":
         return <OrderModalContent />;
+        case "DATA":
+          return <DataModalContent />;
       // Add more cases for other items if needed
       default:
         return null;

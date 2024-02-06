@@ -337,9 +337,9 @@ const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
           </Modal>
         </div>
         <div>
-          <pre>
+          {/* <pre>
             <code>{jsonData}</code>
-          </pre>
+          </pre> */}
         </div>
       </div>
     </List>
