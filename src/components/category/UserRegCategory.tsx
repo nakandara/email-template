@@ -242,70 +242,7 @@ const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
     />
   );
 
-  const AddressCardOne: React.FC<{ type: string; name: string }> = ({
-    type,
-    name,
-  }) => (
-    <CustomCard
-      title="Madurupitiya"
-      cardName="AddressCardOne"
-      type={type}
-      name={name}
-      children={undefined}
-    />
-  );
 
-  const AddressCardTwo: React.FC<{ type: string; name: string }> = ({
-    type,
-    name,
-  }) => (
-    <CustomCard
-      title="Loluwagoda"
-      cardName="AddressCardTwo"
-      type={type}
-      name={name}
-      children={undefined}
-    />
-  );
-
-  const CityCard: React.FC<{ type: string; name: string }> = ({
-    type,
-    name,
-  }) => (
-    <CustomCard
-      title="Mirigama"
-      cardName="CityCard"
-      type={type}
-      name={name}
-      children={undefined}
-    />
-  );
-
-  const ZipCodeCard: React.FC<{ type: string; name: string }> = ({
-    type,
-    name,
-  }) => (
-    <CustomCard
-      title="11204"
-      cardName="ZipCodeCard"
-      type={type}
-      name={name}
-      children={undefined}
-    />
-  );
-
-  const BirthDayCard: React.FC<{ type: string; name: string }> = ({
-    type,
-    name,
-  }) => (
-    <CustomCard
-      title="1888-07-17"
-      cardName="BirthDayCard"
-      type={type}
-      name={name}
-      children={undefined}
-    />
-  );
 
   // const PastOrdersTypeCard: React.FC = () => (
   //   <PastOrders
