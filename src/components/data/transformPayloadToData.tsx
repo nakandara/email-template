@@ -8,10 +8,7 @@ interface DataItem {
     itemKeys?: DataItem[];
   }
   
-  const capitalizeFirstLetter = (str: string): string => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
-  
+ 
   export const transformPayloadToData = (payload: any): DataItem[] => {
     return Object.entries(payload).map(([key, value]) => {
       if (typeof value === 'object' && value !== null && !Array.isArray(value)) {

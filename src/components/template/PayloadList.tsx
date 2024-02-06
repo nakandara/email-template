@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { useCardContext } from "../context/CardContext";
 import { Box, Modal, Typography } from "@mui/material";
 
-const sampleItems = ["EVENT", "USER", "ORDER", "Item 4"];
+const sampleItems = ["EVENT", "USER", "ORDER", "DATA"];
 
 const EventModalContent = () => {
   

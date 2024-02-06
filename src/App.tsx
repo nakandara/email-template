@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from './Sidebar';
 import DashboardHome from "./components/Home";
 import  DashboardSelectEvents from "./components/SelectEvents";
-import  Category1 from "./components/category/category1";
-import  Category2 from "./components/category/Category2";
+
+import  Category2 from "./components/category/UserRegCategory";
 import DrawerAppBar from "./components/layout/DrawerAppBar";
 import Footer from "./components/layout/Footer";
 

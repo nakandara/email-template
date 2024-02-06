@@ -7,7 +7,7 @@ import CustomizedSteppers from "../linearSteps/CustomizedSteppers";
 import "./Template.css";
 import PayloadList from "./PayloadList";
 import { useCardContext } from "../context/CardContext";
-import Category2 from "../category/Category2";
+import Category2 from "../category/UserRegCategory";
 import { useState } from "react";
 
 const steps = [
@@ -55,6 +55,7 @@ const SelectPayload = () => {
               {payLoadData === "EVENT" &&  <Category2 payload={"EVENT"} />}
               {payLoadData === "ORDER" && <Category2 payload={"ORDER"} />}
               {payLoadData === "USER" && <Category2 payload={"USER"} />}
+              {payLoadData === "DATA" && <Category2 payload={"DATA"} />}
 
                 {payLoadData === "FIRST" && <PayloadList />}
               </Item>

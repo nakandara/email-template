@@ -112,6 +112,7 @@ const CustomizedSteppers: React.FC<CustomCardProps> = ({
       case "EVENT":
       case "ORDER":
       case "USER":
+      case "DATA":
         return 1; // "Create an ad group"
       case "FIRST":
       default:
@@ -127,6 +128,7 @@ const CustomizedSteppers: React.FC<CustomCardProps> = ({
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     setPayLoadData("FIRST")
+    window.location.reload();
   };
 
   return (

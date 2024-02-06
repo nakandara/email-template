@@ -19,22 +19,19 @@ import AttachEmailIcon from "@mui/icons-material/AttachEmail";
 
 import DashboardHome from "../../components/Home";
 import DashboardSelectEvents from "../../components/SelectEvents";
-import Category1 from "../../components/category/category1";
-import Category2 from "../../components/category/Category2";
+
+import Category2 from "../category/UserRegCategory";
 import SelectPayload from "../template/SelectPayload";
 import Footer from "./Footer";
 
 interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
+  
   window?: () => Window;
 }
 
 const drawerWidth = 240;
 const navItems = ["Home", "About", "Contact"];
-const navItemsSideBar = ["UserReg",'Home',"Template"];
+const navItemsSideBar = ['Home',"Template"];
 
 
 export default function DrawerAppBar(props: Props) {
@@ -143,7 +140,7 @@ export default function DrawerAppBar(props: Props) {
               path="/dashboard/about"
               element={<DashboardSelectEvents />}
             />
-            <Route path="/dashboard/category1" element={<Category1 />} />
+          
             <Route path="/UserReg" element={<Category2 />} />
           </Routes>
         </div>

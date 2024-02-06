@@ -3,12 +3,15 @@ import { useCardContext } from "../context/CardContext";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { transformPayloadToData } from "../data/transformPayloadToData";
-import {
-  payloadData,
-  payloadEvent,
-  payloadOrder,
-  payloadUser,
-} from "../data/PayloadData";
+
+import { events } from "../data/PayloadData";
+
+// import {
+//   payloadData,
+//   payloadEvent,
+//   payloadOrder,
+//   payloadUser,
+// } from "../data/PayloadData";
 import "./CardBoxes.css";
 import {
   List,
@@ -46,16 +49,45 @@ interface Address {
 interface Category {
   title: string;
   subcategories?: Category[];
+  example: string;
+  type: string;
 }
 
 const transformDataToCategory = (data: DataItem): Category => {
   return {
     title: data.variable,
     subcategories: data.itemKeys?.map(transformDataToCategory),
+    example: data.example,
+    type: data.type,
   };
 };
 
-const Category2: React.FC<{ payload?: string }> = ({payload}) => {
+const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
+  console.log(events);
+  const dataCreatedEvent = events.find(
+    (event) => event.name === "Data Created"
+  );
+  const orderCreatedEvent = events.find(
+    (event) => event.name === "Order Created"
+  );
+  const EventCreatedEvent = events.find(
+    (event) => event.name === "Event Created"
+  );
+  const UserCreatedEvent = events.find(
+    (event) => event.name === "User Created"
+  );
+
+  
+
+  const dataCreatedPayload = dataCreatedEvent?.payload || [];
+  const orderCreatedPayload = orderCreatedEvent?.payload || [];
+  const eventCreatedPayload = EventCreatedEvent?.payload || [];
+  const userCreatedPayload = UserCreatedEvent?.payload || [];
+
+
+  console.log(userCreatedPayload);
+  console.log(orderCreatedPayload);
+
   const {
     nameCardType,
     nameNameCard,
@@ -66,6 +98,7 @@ const Category2: React.FC<{ payload?: string }> = ({payload}) => {
     birthdayCardName,
     pastOrderTypeCardName,
     pastOrderPriceCardName,
+    setSelectPayLoad,
   } = useCardContext();
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -83,8 +116,6 @@ const Category2: React.FC<{ payload?: string }> = ({payload}) => {
     }
   };
 
-
-  
   const renderCategory = (category: Category) => (
     <div key={category.title}>
       <ListItem
@@ -128,19 +159,21 @@ const Category2: React.FC<{ payload?: string }> = ({payload}) => {
 
   let payloadDataT;
   if (payload === "EVENT") {
-    payloadDataT = payloadEvent[0];
+    payloadDataT = eventCreatedPayload[0];
+    setSelectPayLoad(eventCreatedPayload[0]);
   } else if (payload === "ORDER") {
-    payloadDataT = payloadOrder[0];
-  }  else if (payload === "DATA") {
-    payloadDataT = payloadData[0];
-  }
-  else if (payload === "USER") {
-    payloadDataT = payloadUser[0];
+    payloadDataT = orderCreatedPayload[0];
+    setSelectPayLoad(orderCreatedPayload[0]);
+  } else if (payload === "DATA") {
+    payloadDataT = dataCreatedPayload[0];
+    setSelectPayLoad(dataCreatedPayload[0]);
+  } else if (payload === "USER") {
+    payloadDataT = userCreatedPayload[0];
+    setSelectPayLoad(userCreatedPayload[0]);
   }
 
-  const newData: DataItem[] = transformPayloadToData(payloadData[0]);
-  console.log(newData);
-  console.log(newData);
+  const newData: DataItem[] = transformPayloadToData(payloadDataT);
+
 
   const jsonData = JSON.stringify(newData, null, 2);
 
@@ -153,41 +186,56 @@ const Category2: React.FC<{ payload?: string }> = ({payload}) => {
   }> = ({ selectedCategory, type, name }) => (
     <div className="card-container">
       <div className="card">
-        {(() => {
-          switch (selectedCategory) {
-            case "name":
-              return <NameCard type={type} name={name} />;
-            case "addressLine1":
-              return <AddressCardOne type={type} name={name} />;
-            case "addressLine2":
-              return <AddressCardTwo type={type} name={name} />;
-            case "city":
-              return <CityCard type={type} name={name} />;
-            case "zipCode":
-              return <ZipCodeCard type={type} name={name} />;
-            case "birthday":
-              return <BirthDayCard type={type} name={name} />;
-            case "type":
-              return <PastOrdersTypeCard />;
-            case "price":
-              return <PastOrdersPriceCard />;
-            case "totalGuests":
-              return <TotalGuestsCard type={""} name={""} />;
-            default:
-              return "Select Options";
-          }
-        })()}
+        {transformedData.map((dataItem, index) => {
+          return (
+            <div key={index}>
+              {selectedCategory === dataItem.title && (
+                <NameCard
+                  key={index}
+                  type={dataItem.title}
+                  name={name}
+                  title={dataItem.example}
+                  card_Name={dataItem.title}
+                />
+              )}
+
+              {dataItem.subcategories?.map((subCategory, subIndex) => (
+                <div key={`sub-${subIndex}`}>
+                  {selectedCategory === subCategory.title &&
+                    (dataItem.type === "object" ? (
+                      <NameCard
+                        type={dataItem.title}
+                        name={name}
+                        card_Name={dataItem.title +"."+subCategory.title}
+                        title={subCategory.example}
+                      />
+                    ) : (
+                      <PastOrders
+                        title={dataItem.title}
+                        children={undefined}
+                        card_Name={dataItem.title +"."+subCategory.title}
+                        type={""}
+                        name={""}
+                      />
+                    ))}
+                </div>
+              ))}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 
-  const NameCard: React.FC<{ type: string; name: string }> = ({
-    type,
-    name,
-  }) => (
+  const NameCard: React.FC<{
+    type: string;
+    name: string;
+    title: string;
+    card_Name: string;
+  }> = ({ type, name, title, card_Name }) => (
     <CustomCard
-      title="Sadun Perera"
-      cardName="NameCard"
+      title={title}
+      cardName={card_Name}
       type={type}
       name={name}
       children={undefined}
@@ -259,25 +307,25 @@ const Category2: React.FC<{ payload?: string }> = ({payload}) => {
     />
   );
 
-  const PastOrdersTypeCard: React.FC = () => (
-    <PastOrders
-      title={""}
-      children={undefined}
-      cardName={"PastOrdersTypeCard"}
-      type={""}
-      name={""}
-    />
-  );
+  // const PastOrdersTypeCard: React.FC = () => (
+  //   <PastOrders
+  //     title={""}
+  //     children={undefined}
+  //     cardName={"PastOrdersTypeCard"}
+  //     type={""}
+  //     name={""}
+  //   />
+  // );
 
-  const PastOrdersPriceCard: React.FC = () => (
-    <PastOrders
-      title={""}
-      children={undefined}
-      cardName={"PastOrdersPriceCard"}
-      type={""}
-      name={""}
-    />
-  );
+  // const PastOrdersPriceCard: React.FC = () => (
+  //   <PastOrders
+  //     title={""}
+  //     children={undefined}
+  //     cardName={"PastOrdersPriceCard"}
+  //     type={""}
+  //     name={""}
+  //   />
+  // );
 
   const TotalGuestsCard: React.FC<{ type: string; name: string }> = ({
     type,
@@ -351,13 +399,12 @@ const Category2: React.FC<{ payload?: string }> = ({payload}) => {
             </Box>
           </Modal>
         </div>
-        {/* <div>
+        <div>
           <pre>
             <code>{jsonData}</code>
           </pre>
-        </div> */}
+        </div>
       </div>
-      
     </List>
   );
 };

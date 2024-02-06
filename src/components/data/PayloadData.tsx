@@ -1,66 +1,7 @@
-// PayloadData.ts
-
-interface Order {
-  type: string;
-  price: number;
-}
-
-interface Address {
-  addressLine1: string;
-  addressLine2: string;
-  city: string;
-  zipCode: string;
-}
-
-export interface PayloadItem {
-  name: string;
-  address: Address;
-  birthday: string;
-  pastOrders: Order[];
-}
-
-interface Guest {
-  name: string;
-  email: string;
-}
-
-export interface payloadEvent {
-  name: string;
-  totalGuests: string;
-  date: string;
-  guests: Guest[];
-}
-
-interface OrderItem {
-  name: string;
-  quantity: number;
-  unitPrice: number;
-}
-
-interface OrderPayload {
-  id: string;
-  totalPrice: string; 
-  paymentMethod: string;
-  items: OrderItem[];
-}
-
-interface AddressUser {
-  Line1: string;
-  Line2: string;
-  city: string;
-  zipCode: string;
-}
-
-interface UserPayload {
-  name: string;
-  email: string;
-  dob: string;
-  address: AddressUser[];
-}
-
-export const payloadData: PayloadItem[] = [
+ const payloadData = [
   {
     name: "Ruwan",
+    example: "Ruwan",
     address: {
       addressLine1: "Madurupitiya",
       addressLine2: "Loluwagoda",
@@ -81,7 +22,7 @@ export const payloadData: PayloadItem[] = [
   },
 ];
 
-export const payloadEvent: payloadEvent[] = [
+ const payloadEvent = [
   {
     name: "Ruwan",
     totalGuests: "3",
@@ -103,7 +44,7 @@ export const payloadEvent: payloadEvent[] = [
   },
 ];
 
-export const payloadOrder: OrderPayload[] = [
+ const payloadOrder = [
   {
     id: "#223033",
     totalPrice: "4000",
@@ -128,18 +69,23 @@ export const payloadOrder: OrderPayload[] = [
   },
 ];
 
-export const payloadUser: UserPayload[] = [
+ const payloadUser = [
   {
     name: "Ruwan",
     email: "ruwan@gmail.com0",
     dob: "2024-04-01",
-    address: [
-      {
-        Line1: "Samagi Mawatha",
-        Line2: "Kaduwela",
-        city: "Panadura",
-        zipCode: "11234",
-      },
-    ],
+    address: {
+      addressLine1: "Madurupitiya",
+      addressLine2: "Loluwagoda",
+      city: "Mirigama",
+      zipCode: "11204",
+    },
   },
+];
+
+export const events = [
+  { name: "Data Created", payload: payloadData },
+  { name: "Order Created", payload: payloadEvent },
+  { name: "Event Created", payload: payloadOrder },
+  { name: "User Created", payload: payloadUser },
 ];
