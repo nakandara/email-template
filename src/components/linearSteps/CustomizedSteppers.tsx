@@ -129,6 +129,7 @@ const CustomizedSteppers: React.FC<CustomCardProps> = ({
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     setPayLoadData("FIRST")
     window.location.reload();
+    localStorage.removeItem('payload');
   };
 
   return (

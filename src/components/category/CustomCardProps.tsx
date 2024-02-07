@@ -1,7 +1,9 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { useCardContext } from "../context/CardContext";
-import { transformPayloadToData } from "../data/transformPayloadToData";
+import { OutPayloadTransformer } from "../data/OutPayloadTransformer";
+
 import { events } from "../data/PayloadData";
+
 
 interface CustomCardProps {
   title: string;
@@ -10,28 +12,20 @@ interface CustomCardProps {
   type: string;
   name: string;
 }
-
-const inputPayload = {
-  name: "User_name",
-  example: "User_Example",
-  address: {
-    addressLine1: "Madurupitiya",
-    addressLine2: "Loluwagoda",
-    city: "Mirigama",
-    zipCode: "11204",
-  },
-  birthday: "1888-07-17T00:00:00.000Z",
-  pastOrders: [
-    {
-      type: "cat food",
-      price: 100,
-    },
-    {
-      type: "dog food",
-      price: 1000,
-    },
-  ],
+type PayloadType = {
+  name: string;
+  example: any;
+  type: string;
+  accessor: {
+    type: string;
+    key?: string;
+    function?: string;
+    pickKeys?: string[];
+    columnsNames?: { key: string; value: string }[];
+  }[];
 };
+
+
 
 const CustomCard: React.FC<CustomCardProps> = ({
   title,
@@ -41,20 +35,7 @@ const CustomCard: React.FC<CustomCardProps> = ({
   name: initialName,
 }) => {
   const {
-    setNameCardType,
-    setNameNameCard,
-    setAddressLine1CardType,
-    setAddressLine1CardName,
-    setAddressLine2CardType,
-    setAddressLine2CardName,
-    setCityCardName,
-    setCityCardType,
-    setZipCodeCardName,
-    setZipCodeCardType,
-    setBirthdayCardName,
-    setBirthdayCardType,
-    setTotalGuestsCardName,
-    setTotalGuestsCardType,
+    setOutPayLoad,
     selectPayLoad,
   } = useCardContext();
   const [type, setType] = useState("");
@@ -82,37 +63,40 @@ const CustomCard: React.FC<CustomCardProps> = ({
 
   const keyList = extractKeys(selectPayLoad);
 
-  const handleSave = () => {
-    const setTypeAndName = (setTypeFn: Function, setNameFn: Function) => {
-      setTypeFn(type);
-      setNameFn(name);
-    };
 
-    switch (cardName) {
-      case keyList[0]:
-        setTypeAndName(setNameCardType, setNameNameCard);
-        break;
-      case keyList[1]:
-        setTypeAndName(setAddressLine1CardType, setAddressLine1CardName);
-        break;
-      case keyList[2]:
-        setTypeAndName(setAddressLine2CardType, setAddressLine2CardName);
-        break;
-      case keyList[3]:
-        setTypeAndName(setCityCardType, setCityCardName);
-        break;
-      case keyList[4]:
-        setTypeAndName(setZipCodeCardType, setZipCodeCardName);
-        break;
-      case keyList[5]:
-        setTypeAndName(setBirthdayCardType, setBirthdayCardName);
-        break;
-      case keyList[6]:
-        setTypeAndName(setTotalGuestsCardType, setTotalGuestsCardName);
-        break;
-      default:
-        console.log("Select Options");
+  const initialState = () => {
+    const storedData = localStorage.getItem("payload");
+    if (storedData) {
+      return JSON.parse(storedData);
+    } else {
+      const defaultState: { [key: string]: string } = {};
+      keyList.forEach((field) => {
+        defaultState[field] = "";
+      });
+      return defaultState;
     }
+  };
+
+  const [payload, setPayload] = useState<{ [key: string]: string }>(
+    initialState
+  );
+
+  useEffect(() => {
+    localStorage.setItem("payload", JSON.stringify(payload));
+  }, [payload]);
+
+  const handleChange = (key: string, value: string) => {
+    setPayload((prevPayload) => ({
+      ...prevPayload,
+      [key]: value,
+    }));
+  };
+
+
+  const handleSave = () => {
+    const newData: PayloadType[] = OutPayloadTransformer(payload);
+    setOutPayLoad(newData)
+    console.log(newData, "ooo");
   };
 
   return (
@@ -128,9 +112,10 @@ const CustomCard: React.FC<CustomCardProps> = ({
       <div className="input-group">
         <label>Name:</label>
         <input
+          id={cardName}
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={payload[cardName] || ""}
+          onChange={(e) => handleChange(cardName, e.target.value)}
         />
       </div>
       <div className="input-group">

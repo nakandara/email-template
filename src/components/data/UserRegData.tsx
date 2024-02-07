@@ -29,126 +29,115 @@ interface FunctionAccessor {
 
 const UserRegData = () => {
   const {
-    nameCardType,
-    nameNameCard,
-    addressLine1CardName,
-    addressLine2CardName,
-    cityCardName,
-    zipCodeCardName,
-    birthdayCardName,
-    zipCodeCardType,
-    pastOrderTypeCardName,
-    birthdayCardType,
-    pastOrderPriceCardName,
-    pastOrderTypeCardType,
-    pastOrderPriceCardType,
+  
+    outPayLoad
   } = useCardContext();
 
-  const newData: DataItem[] = [
-    {
-      name: nameNameCard,
-      type: nameCardType,
-      accessor: [
-        {
-          type: "object_key",
-          key: "name",
-        },
-      ],
-    },
-    {
-      name: "User Address",
-      type: nameCardType,
-      accessor: [
-        {
-          type: "object_key",
-          key: "address",
-        },
-        {
-          type: "function",
-          function: "PICK_VALUES",
-          pickKeys: [addressLine1CardName, addressLine2CardName, cityCardName],
-        },
-      ],
-    },
+  // const newData: DataItem[] = [
+  //   {
+  //     name: nameNameCard,
+  //     type: nameCardType,
+  //     accessor: [
+  //       {
+  //         type: "object_key",
+  //         key: "name",
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: "User Address",
+  //     type: nameCardType,
+  //     accessor: [
+  //       {
+  //         type: "object_key",
+  //         key: "address",
+  //       },
+  //       {
+  //         type: "function",
+  //         function: "PICK_VALUES",
+  //         pickKeys: [addressLine1CardName, addressLine2CardName, cityCardName],
+  //       },
+  //     ],
+  //   },
 
-    {
-      name: zipCodeCardName,
-      type: zipCodeCardType,
-      accessor: [
-        {
-          type: "object_key",
-          key: "address",
-        },
-        {
-          type: "object_key",
-          key: "zipCode",
-        },
-      ],
-    },
-    {
-      name: birthdayCardName,
-      type: birthdayCardType,
-      accessor: [
-        {
-          type: "object_key",
-          key: "birthday",
-        },
-      ],
-    },
+  //   {
+  //     name: zipCodeCardName,
+  //     type: zipCodeCardType,
+  //     accessor: [
+  //       {
+  //         type: "object_key",
+  //         key: "address",
+  //       },
+  //       {
+  //         type: "object_key",
+  //         key: "zipCode",
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: birthdayCardName,
+  //     type: birthdayCardType,
+  //     accessor: [
+  //       {
+  //         type: "object_key",
+  //         key: "birthday",
+  //       },
+  //     ],
+  //   },
 
-    {
-      name: "Past Orders",
-      example: {
-        columns: [pastOrderTypeCardName, pastOrderPriceCardName],
-        rows: [
-          ["cat food", 100],
-          ["dog food", 1000],
-        ],
-      },
-      type: "table",
-      accessor: [
-        {
-          type: "object_key",
-          key: "pastOrders",
-        },
-        {
-          type: "function",
-          function: "TABLE",
-          pickKeys: [],
-          columnsNames: [
-            {
-              key: "type",
-              value: pastOrderTypeCardType,
-            },
-            {
-              key: "price",
-              value: pastOrderPriceCardType,
-            },
-          ],
-        },
-      ],
-    },
+  //   {
+  //     name: "Past Orders",
+  //     example: {
+  //       columns: [pastOrderTypeCardName, pastOrderPriceCardName],
+  //       rows: [
+  //         ["cat food", 100],
+  //         ["dog food", 1000],
+  //       ],
+  //     },
+  //     type: "table",
+  //     accessor: [
+  //       {
+  //         type: "object_key",
+  //         key: "pastOrders",
+  //       },
+  //       {
+  //         type: "function",
+  //         function: "TABLE",
+  //         pickKeys: [],
+  //         columnsNames: [
+  //           {
+  //             key: "type",
+  //             value: pastOrderTypeCardType,
+  //           },
+  //           {
+  //             key: "price",
+  //             value: pastOrderPriceCardType,
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
 
-    {
-      name: "Past Order Count",
-      type: "number",
-      accessor: [
-        {
-          type: "object_key",
-          key: "pastOrders",
-        },
-        {
-          type: "function",
-          function: "COUNT",
-          pickKeys: [],
-        },
-      ],
-    },
-  ];
+  //   {
+  //     name: "Past Order Count",
+  //     type: "number",
+  //     accessor: [
+  //       {
+  //         type: "object_key",
+  //         key: "pastOrders",
+  //       },
+  //       {
+  //         type: "function",
+  //         function: "COUNT",
+  //         pickKeys: [],
+  //       },
+  //     ],
+  //   },
+  // ];
 
-  console.log(newData, "newData");
 
-  const jsonData = JSON.stringify(newData, null, 2);
+
+  const jsonData = JSON.stringify(outPayLoad, null, 2);
 
   return (
     <div>

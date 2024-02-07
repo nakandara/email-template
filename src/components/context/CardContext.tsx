@@ -20,6 +20,7 @@ interface CardContextProps {
   pastOrderPriceCardName:string
   pastOrderPriceCardType:string
   selectPayLoad:any
+  outPayLoad:any
 
   totalGuestsCardName:string
   totalGuestsCardType:string
@@ -50,6 +51,7 @@ interface CardContextProps {
   setTotalGuestsCardName:(name:string) => void;
   setTotalGuestsCardType:(type:string) => void;
 
+  setOutPayLoad:(type:any) => void;
 
   setPayLoadData:(item:any) => void;
   setSelectPayLoad:(item:any) => void;
@@ -90,6 +92,8 @@ export const CardProvider: React.FC<{ children: ReactNode }> = ({
 
   const [payLoadData, setPayLoadData] = useState("FIRST");
   const [selectPayLoad, setSelectPayLoad] = useState("");
+  const [outPayLoad, setOutPayLoad] = useState("");
+
 
   return (
     <CardContext.Provider
@@ -133,7 +137,9 @@ export const CardProvider: React.FC<{ children: ReactNode }> = ({
         setPayLoadData,
         payLoadData,
         selectPayLoad,
-        setSelectPayLoad
+        setSelectPayLoad,
+        setOutPayLoad,
+        outPayLoad
       }}
     >
       {children}
