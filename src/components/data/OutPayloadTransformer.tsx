@@ -2,7 +2,7 @@
 
 interface DataItem {
   variable: string;
-  example?: any;
+
   type: string;
   itemType?: string;
   itemKeys?: DataItem[];
@@ -10,7 +10,7 @@ interface DataItem {
 
 type PayloadType = {
   name: string;
-  example: any;
+
   type: string;
   accessor: {
     type: string;
@@ -25,7 +25,6 @@ export const OutPayloadTransformer = (payload: any): PayloadType[] => {
   return Object.keys(payload).map((key) => {
     let transformedField: PayloadType = {
       name: "",
-      example: "",
       type: "",
       accessor: [],
     };
@@ -35,7 +34,9 @@ export const OutPayloadTransformer = (payload: any): PayloadType[] => {
       .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
       .join(" ");
 
-    transformedField.example = payload[key];
+    if (key === "name") {
+      transformedField.name = payload[key];
+    }
 
     if (typeof payload[key] === "string") {
       transformedField.type = "string";
