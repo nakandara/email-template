@@ -165,7 +165,7 @@ const CustomCard: React.FC<CustomCardProps> = ({
       </div>
       <div className="input-group">
         <label>Example:</label>
-        <input type="text" value={payload.example.value} readOnly />
+        <input type="text" value={payload.example?.value || ''} readOnly />
       </div>
       {children}
       <button className="custom-button" onClick={handleSave}>
