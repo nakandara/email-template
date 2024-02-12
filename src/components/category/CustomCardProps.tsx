@@ -153,6 +153,7 @@ const CustomCard: React.FC<CustomCardProps> = ({
         >
           <option value="Text">Text</option>
           <option value="Number">Number</option>
+          <option value="Number">List</option>
           <option value="string">string</option>
           <option value="Date">Date</option>
         </select>
