@@ -1,76 +1,199 @@
-// payloadTransformer.ts
-
-interface DataItem {
+interface InputVariable {
   variable: string;
-
+  example: string | null;
   type: string;
-  itemType?: string;
-  itemKeys?: DataItem[];
+  keys?: InputVariable[];
 }
 
-type PayloadType = {
+interface OutputVariable {
   name: string;
-
+  example: string | string[] | null;
   type: string;
   accessor: {
     type: string;
     key?: string;
     function?: string;
     pickKeys?: string[];
-    columnsNames?: { key: string; value: string }[];
   }[];
-};
+}
 
-export const OutPayloadTransformer = (payload: any): PayloadType[] => {
-  return Object.keys(payload).map((key) => {
-    let transformedField: PayloadType = {
-      name: "",
-      type: "",
-      accessor: [],
-    };
-
-    transformedField.name = key
-      .split(".")
-      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-      .join(" ");
-
-    if (key === "name") {
-      transformedField.name = payload[key];
-    }
-
-    if (typeof payload[key] === "string") {
-      transformedField.type = "string";
-    } else if (typeof payload[key] === "number") {
-      transformedField.type = "number";
-    } else if (Array.isArray(payload[key])) {
-      transformedField.type = "list";
-    } else if (
-      typeof payload[key] === "object" &&
-      payload[key] !== null &&
-      !Array.isArray(payload[key])
-    ) {
-      if (payload[key] instanceof Date) {
-        transformedField.type = "date";
-      } else if ("columns" in payload[key] && "rows" in payload[key]) {
-        transformedField.type = "table";
+export const LastTransformPayload = (
+  payload: InputVariable[]
+): OutputVariable[] => {
+  return payload
+    .map((variable: InputVariable) => {
+      if (!variable) {
+        return null;
       }
-    }
 
-    const keyParts = key.split(".");
-    if (keyParts.length === 1) {
-      transformedField.accessor.push({ type: "object_key", key: key });
-    } else {
-      transformedField.accessor.push({
-        type: "object_key",
-        key: keyParts[0],
-      });
-      transformedField.accessor.push({
-        type: "function",
-        function: "PICK_VALUES",
-        pickKeys: keyParts.slice(1),
-      });
-    }
+      let transformedVariable: OutputVariable = {
+        name:
+          variable.variable?.charAt(0).toUpperCase() +
+          variable.variable?.slice(1),
+        example: variable.example,
+        type: variable.type,
+        accessor: [],
+      };
 
-    return transformedField;
-  });
+      if (variable.type === "object" && variable.keys) {
+        const exampleArray = variable.keys.map(
+          (key: InputVariable) => key.example
+        );
+        transformedVariable.example = exampleArray.every((ex) => ex !== null)
+          ? (exampleArray as string[])
+          : null;
+        transformedVariable.type = "list";
+
+        transformedVariable.accessor.push({
+          type: "object_key",
+          key: variable.variable,
+        });
+
+        const pickKeys = variable.keys.map(
+          (key: InputVariable) => key.variable
+        );
+        transformedVariable.accessor.push({
+          type: "function",
+          function: "PICK_VALUES",
+          pickKeys,
+        });
+      } else {
+        transformedVariable.accessor.push({
+          type: "object_key",
+          key: variable.variable,
+        });
+      }
+
+      return transformedVariable;
+    })
+    .filter((variable): variable is OutputVariable => variable !== null);
 };
+
+// Your interface declarations and function definition
+
+// Example payload
+const payload: InputVariable[] = [
+  {
+    variable: "name",
+    example: "Ruwan",
+    type: "string",
+  },
+  {
+    variable: "address",
+    example: null,
+    type: "object",
+    keys: [
+      {
+        variable: "addressLine1",
+        example: "Madurupitiya",
+        type: "string",
+      },
+      {
+        variable: "addressLine2",
+        example: "Loluwagoda",
+        type: "string",
+      },
+      {
+        variable: "city",
+        example: "Mirigama",
+        type: "string",
+      },
+      {
+        variable: "zipCode",
+        example: "11204",
+        type: "string",
+      },
+    ],
+  },
+  {
+    variable: "birthday",
+    example: "1888-07-17T00:00:00.000Z",
+    type: "date",
+  },
+];
+
+type InputItem = {
+  [key: string]: {
+    value: string;
+    type: string;
+  };
+};
+
+type OutputItemAccessor = {
+  type: string;
+  key?: string;
+  function?: string;
+  pickKeys?: string[];
+};
+
+type OutputItem = {
+  name: string;
+  type: string;
+  example?: string[] | string;
+  accessor: OutputItemAccessor[];
+};
+
+export const transformPayload = (payload: InputItem[]): OutputItem[] => {
+  const output: OutputItem[] = [];
+
+  payload.forEach((item) => {
+    Object.entries(item).forEach(([key, value]) => {
+      const accessor: OutputItemAccessor[] = [];
+      const keys = key.split(".");
+      const accessorBase: OutputItemAccessor = {
+        type: "object_key",
+        key: keys[0],
+      };
+      accessor.push(accessorBase);
+      if (keys.length > 1) {
+        accessor.push({
+          type: "function",
+          function: "PICK_VALUES",
+          pickKeys: keys.slice(1),
+        });
+      }
+      const outputItem: OutputItem = {
+        name: value.value,
+        type: value.type,
+        accessor: accessor,
+      };
+      output.push(outputItem);
+    });
+  });
+
+  return output;
+};
+
+// Example usage
+const inputPayload: InputItem[] = [
+  {
+    name: {
+      value: "User_Name",
+      type: "string",
+    },
+    "address.addressLine1": {
+      value: "user_addressLine_one",
+      type: "string",
+    },
+    "address.addressLine2": {
+      value: "user_addressLine_two",
+      type: "string",
+    },
+    "address.city": {
+      value: "user_City",
+      type: "string",
+    },
+    "address.zipCode": {
+      value: "user_zip",
+      type: "Number",
+    },
+    birthday: {
+      value: "User_birthday",
+      type: "Date",
+    },
+    pastOrders: {
+      value: "",
+      type: "object",
+    },
+  },
+];

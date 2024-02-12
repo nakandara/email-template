@@ -35,7 +35,6 @@ const SelectPayload = () => {
     payLoadData
   } = useCardContext();
 
-  console.log(activeStep,'tttttttttttt');
 
 
 

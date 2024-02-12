@@ -1,25 +1,24 @@
  const payloadData = [
   {
     name: "Ruwan",
-    example: "Ruwan",
     address: {
-      addressLine1: "Madurupitiya",
-      addressLine2: "Loluwagoda",
-      city: "Mirigama",
-      zipCode: "11204",
+        addressLine1: "Madurupitiya",
+        addressLine2: "Loluwagoda",
+        city: "Mirigama",
+        zipCode: "11204"
     },
     birthday: "1888-07-17T00:00:00.000Z",
     pastOrders: [
-      {
-        type: "cat food",
-        price: 100,
-      },
-      {
-        type: "dog food",
-        price: 1000,
-      },
-    ],
-  },
+        {
+            type: "cat food",
+            price: 100
+        },
+        {
+            type: "dog food",
+            price: 1000
+        }
+    ]
+}
 ];
 
  const payloadEvent = [

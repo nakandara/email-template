@@ -92,7 +92,7 @@ const PayloadList = () => {
   };
 
   const renderModalContent = () => {
-    console.log(selectedItem);
+  
 
     switch (selectedItem) {
       case "EVENT":

@@ -1,9 +1,54 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { useCardContext } from "../context/CardContext";
-import { OutPayloadTransformer } from "../data/OutPayloadTransformer";
+import { transformPayload } from "../data/OutPayloadTransformer";
 
-import { events } from "../data/PayloadData";
+type KeyAccessor = { type: string; key: string };
+type FunctionAccessor = { type: string; function: string; pickKeys: string[] };
+type Accessor = KeyAccessor | FunctionAccessor;
 
+export interface KeyValue {
+  value: string | Record<string, any> | Array<string | Record<string, any>>;
+  type: string;
+}
+
+export interface PayloadItem {
+  [key: string]: KeyValue;
+}
+type InputItem = {
+  [key: string]: {
+    value: string;
+    type: string;
+  };
+};
+
+type OutputItemAccessor = {
+  type: string;
+  key?: string;
+  function?: string;
+  pickKeys?: string[];
+};
+
+type OutputItem = {
+  name: string;
+  type: string;
+  example?: string[] | string;
+  accessor: OutputItemAccessor[];
+};
+
+export interface AccessorItem {
+  type: string;
+  key: string;
+  function?: string;
+  pickKeys?: string[];
+  columnsNames?: { key: string; value: string }[];
+}
+
+export interface TransformedItem {
+  name: string | Record<string, any> | string[] | Record<string, any>[];
+  example: string | Record<string, any> | string[] | Record<string, any>[];
+  type: string;
+  accessor: AccessorItem[];
+}
 interface CustomCardProps {
   title: string;
   children: ReactNode;
@@ -12,25 +57,7 @@ interface CustomCardProps {
   name: string;
 }
 
-interface DataItem {
-  variable: string;
 
-  type: string;
-  itemType?: string;
-  itemKeys?: DataItem[];
-}
-
-type PayloadType = {
-  name: string;
-  type: string;
-  accessor: {
-    type: string;
-    key?: string;
-    function?: string;
-    pickKeys?: string[];
-    columnsNames?: { key: string; value: string }[];
-  }[];
-};
 
 const CustomCard: React.FC<CustomCardProps> = ({
   title,
@@ -39,11 +66,9 @@ const CustomCard: React.FC<CustomCardProps> = ({
   type: initialType,
   name: initialName,
 }) => {
-  const { setOutPayLoad, selectPayLoad } = useCardContext();
+  const { setOutPayLoad, selectPayLoad, outPayLoad } = useCardContext();
   const [type, setType] = useState("");
   const [name, setName] = useState("");
-
-  console.log(selectPayLoad, "selectPayLoad");
 
   function extractKeys(payload: any) {
     const keysWithType: { name: string; type: string }[] = [];
@@ -66,7 +91,6 @@ const CustomCard: React.FC<CustomCardProps> = ({
 
   const keyList = extractKeys(selectPayLoad);
 
-  console.log(keyList, "keyListkeyList");
 
   const initialState = () => {
     const storedData = localStorage.getItem("payload");
@@ -93,20 +117,10 @@ const CustomCard: React.FC<CustomCardProps> = ({
   const handleChange = (key: string, value: string, valueType: string) => {
     setPayload((prevPayload) => {
       if (key.includes(".")) {
-        const keys = key.split(".");
-        let updatedPayload = { ...prevPayload };
-        let currentObject: any = updatedPayload;
-
-        for (let i = 0; i < keys.length - 1; i++) {
-          if (!currentObject[keys[i]]) {
-            currentObject[keys[i]] = {};
-          }
-          currentObject = currentObject[keys[i]];
-        }
-
-        currentObject[keys[keys.length - 1]] = { value, type: valueType };
-
-        return updatedPayload;
+        return {
+          ...prevPayload,
+          [key]: { value, type: valueType },
+        };
       } else {
         return {
           ...prevPayload,
@@ -120,19 +134,13 @@ const CustomCard: React.FC<CustomCardProps> = ({
     handleChange(key, payload[key].value, selectedType);
   };
 
-  const handleSave = () => {
-    const newData: PayloadType[] = OutPayloadTransformer(payload);
-    setOutPayLoad(newData);
+  const payloadnn = JSON.stringify(payload, null, 2);
 
-    const payloadWithTypes: { [key: string]: { value: string; type: string } } =
-      keyList.reduce((acc, field) => {
-        acc[field.name] = {
-          value: payload[field.name].value,
-          type: payload[field.name].type,
-        };
-        return acc;
-      }, {} as { [key: string]: { value: string; type: string } }); // Specify the type of the initial accumulator as an empty object
-    localStorage.setItem("payload", JSON.stringify(payloadWithTypes));
+  const handleSave = () => {
+    const inputPayload: InputItem[] = [payload];
+    const transformedPayload = transformPayload(inputPayload);
+
+    setOutPayLoad(transformedPayload);
   };
 
   return (
@@ -145,6 +153,7 @@ const CustomCard: React.FC<CustomCardProps> = ({
         >
           <option value="Text">Text</option>
           <option value="Number">Number</option>
+          <option value="string">string</option>
           <option value="Date">Date</option>
         </select>
       </div>
@@ -165,12 +174,25 @@ const CustomCard: React.FC<CustomCardProps> = ({
       </div>
       <div className="input-group">
         <label>Example:</label>
-        <input type="text" value={payload.example?.value || ''} readOnly />
+        <input type="text" placeholder={title} readOnly />
       </div>
       {children}
       <button className="custom-button" onClick={handleSave}>
         Save
       </button>
+      {/* 
+      <pre>
+        <code>{jsonDatakeyListc}</code>
+      </pre>
+      <div>----------------------</div>
+      <pre>
+        <code>{jsonDatanc}</code>
+      </pre>
+
+      <div>----------------------</div>
+      <pre>
+        <code>{payloadnn}</code>
+      </pre> */}
     </div>
   );
 };
