@@ -17,12 +17,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import AttachEmailIcon from "@mui/icons-material/AttachEmail";
 
-import DashboardHome from "../../components/Home";
+import DashboardHome from "../navbar/Home";
+import About from "../navbar/About";
+import Contact from "../navbar/Contact";
 import DashboardSelectEvents from "../../components/SelectEvents";
 
 import Category2 from "../category/UserRegCategory";
 import SelectPayload from "../template/SelectPayload";
-import Footer from "./Footer";
+
 
 interface Props {
   
@@ -93,7 +95,17 @@ export default function DrawerAppBar(props: Props) {
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
               <Button key={item} sx={{ color: "#fff" }}>
-                {item}
+                <Link
+            key={item}
+            to={`/${item.toLowerCase()}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <ListItem disablePadding>
+              <ListItemButton sx={{ textAlign: "center" }}>
+                <ListItemText primary={item} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
               </Button>
             ))}
           </Box>
@@ -134,7 +146,8 @@ export default function DrawerAppBar(props: Props) {
         <div>
           <Routes>
             <Route path="/home" element={<DashboardHome/>} />
-            <Route path="/" element={<DashboardHome/>} />
+            <Route path="/about" element={<About/>} />
+            <Route path="/contact" element={<Contact/>} />
             <Route path="/template" element={<SelectPayload/>} />
             <Route
               path="/dashboard/about"
