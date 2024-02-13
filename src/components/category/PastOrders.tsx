@@ -6,7 +6,7 @@ interface CustomCardProps {
   children: ReactNode;
   card_Name: any;
   typeItem: string;
-  subCategory:any;
+  subCategory: any;
   tableColumn: number; // Change the type to number
   name: string;
 }
@@ -19,10 +19,7 @@ const PastOrders: React.FC<CustomCardProps> = ({
   tableColumn, // Access the tableColumn prop
 }) => {
   const {
-    setPastOrderTypeCardName,
-    setPastOrderTypeCardType,
-    setPastOrderPriceCardName,
-    setPastOrderPriceCardType,
+
     selectPayLoad,
   } = useCardContext();
 
@@ -30,23 +27,12 @@ const PastOrders: React.FC<CustomCardProps> = ({
   const [name, setName] = useState("");
 
   const handleSave = () => {
-    switch (card_Name) {
-      case "type":
-        setPastOrderTypeCardType(type);
-        setPastOrderTypeCardName(name);
-        break;
-      case "price":
-        setPastOrderPriceCardType(type);
-        setPastOrderPriceCardName(name);
-        break;
-      default:
-        console.log("Select Options");
-    }
+
   };
 
   // Render table columns dynamically based on tableColumn count
   const renderTableColumns = () => {
-    return subCategory.map((category:any, index:any) => (
+    return subCategory.map((category: any, index: any) => (
       <th key={`column-${index}`}>{category.title}</th>
     ));
   };
@@ -57,7 +43,7 @@ const PastOrders: React.FC<CustomCardProps> = ({
     for (let i = 0; i < tableColumn; i++) {
       rows.push(
         <tr key={`row-${i}`}>
-          {subCategory.map((category:any, index:any) => (
+          {subCategory.map((category: any, index: any) => (
             <td key={`cell-${i}-${index}`}>{category.example}</td>
           ))}
         </tr>
@@ -79,7 +65,7 @@ const PastOrders: React.FC<CustomCardProps> = ({
         <div className="table-wrapper">
           <table className="custom-table">
             <thead>
-            <tr>{renderTableColumns()}</tr>
+              <tr>{renderTableColumns()}</tr>
             </thead>
             <tbody>{renderTableRows()}</tbody>
           </table>
