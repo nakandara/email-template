@@ -82,10 +82,7 @@ const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
   const eventCreatedPayload = EventCreatedEvent?.payload || [];
   const userCreatedPayload = UserCreatedEvent?.payload || [];
 
-  const {
-    outPayLoad,
-    setSelectPayLoad,
-  } = useCardContext();
+  const { outPayLoad, setSelectPayLoad } = useCardContext();
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -160,7 +157,6 @@ const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
 
   const newData: DataItem[] = transformPayloadToData(payloadDataT);
 
-
   const transformedData: Category[] = newData.map(transformDataToCategory);
 
   const CardContainer: React.FC<{
@@ -174,13 +170,20 @@ const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
           return (
             <div key={index}>
               {selectedCategory === dataItem.title && (
-                <NameCard
-                  key={index}
-                  type={dataItem.title}
-                  name={name}
-                  title={dataItem.example}
-                  card_Name={dataItem.title}
-                />
+                <>
+                  {dataItem.subcategories &&
+                  dataItem.subcategories.length > 0 ? (
+                    "Select Sub Category"
+                  ) : (
+                    <NameCard
+                      key={index}
+                      type={dataItem.title}
+                      name={name}
+                      title={dataItem.example}
+                      card_Name={dataItem.title}
+                    />
+                  )}
+                </>
               )}
 
               {dataItem.subcategories?.map((subCategory, subIndex) => (
@@ -225,7 +228,6 @@ const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
       children={undefined}
     />
   );
-
 
   const TotalGuestsCard: React.FC<{ type: string; name: string }> = ({
     type,
@@ -293,8 +295,7 @@ const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
             </Box>
           </Modal>
         </div>
-        <div>
-        </div>
+        <div></div>
       </div>
     </List>
   );
