@@ -25,16 +25,13 @@ import DashboardSelectEvents from "../../components/SelectEvents";
 import Category2 from "../category/UserRegCategory";
 import SelectPayload from "../template/SelectPayload";
 
-
 interface Props {
-  
   window?: () => Window;
 }
 
 const drawerWidth = 240;
 const navItems = ["Home", "About", "Contact"];
-const navItemsSideBar = ['Home',"Template"];
-
+const navItemsSideBar = ["Home", "Template"];
 
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
@@ -96,16 +93,16 @@ export default function DrawerAppBar(props: Props) {
             {navItems.map((item) => (
               <Button key={item} sx={{ color: "#fff" }}>
                 <Link
-            key={item}
-            to={`/${item.toLowerCase()}`}
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            <ListItem disablePadding>
-              <ListItemButton sx={{ textAlign: "center" }}>
-                <ListItemText primary={item} />
-              </ListItemButton>
-            </ListItem>
-          </Link>
+                  key={item}
+                  to={`/${item.toLowerCase()}`}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <ListItem disablePadding>
+                    <ListItemButton sx={{ textAlign: "center" }}>
+                      <ListItemText primary={item} />
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
               </Button>
             ))}
           </Box>
@@ -145,21 +142,20 @@ export default function DrawerAppBar(props: Props) {
         <Toolbar />
         <div>
           <Routes>
-            <Route path="/home" element={<DashboardHome/>} />
-            <Route path="/about" element={<About/>} />
-            <Route path="/contact" element={<Contact/>} />
-            <Route path="/template" element={<SelectPayload/>} />
+            <Route path="/" element={<DashboardHome />} />
+            <Route path="/home" element={<DashboardHome />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/template" element={<SelectPayload />} />
             <Route
               path="/dashboard/about"
               element={<DashboardSelectEvents />}
             />
-          
+
             <Route path="/UserReg" element={<Category2 />} />
           </Routes>
         </div>
-        
       </Box>
-      
     </Box>
   );
 }
