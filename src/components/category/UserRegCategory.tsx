@@ -200,8 +200,10 @@ const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
                       <PastOrders
                         title={dataItem.title}
                         children={undefined}
+                        subCategory={dataItem.subcategories}
+                        tableColumn={dataItem.subcategories?.length ?? 0}
                         card_Name={dataItem.title + "." + subCategory.title}
-                        type={""}
+                        typeItem={dataItem.type}
                         name={""}
                       />
                     ))}

@@ -5,11 +5,19 @@ interface CustomCardProps {
   title: string;
   children: ReactNode;
   card_Name: any;
-  type: string;
+  typeItem: string;
+  subCategory:any;
+  tableColumn: number; // Change the type to number
   name: string;
 }
 
-const PastOrders: React.FC<CustomCardProps> = ({ card_Name, title }) => {
+const PastOrders: React.FC<CustomCardProps> = ({
+  card_Name,
+  title,
+  typeItem,
+  subCategory,
+  tableColumn, // Access the tableColumn prop
+}) => {
   const {
     setPastOrderTypeCardName,
     setPastOrderTypeCardType,
@@ -36,107 +44,46 @@ const PastOrders: React.FC<CustomCardProps> = ({ card_Name, title }) => {
     }
   };
 
-  const renderTableHead = () => {
-    switch (title) {
-      case "items":
-        return (
-          <tr>
-            {card_Name === "name" ? (
-              <>
-                <th>
-                  <input
-                    value={name}
-                    type="text"
-                    placeholder="name"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </th>
-                <th>name</th>
-                <th>unitPrice</th>
-              </>
-            ) : (
-              <>
-                <th>name</th>
-                <th>quantity</th>
-                <th>
-                  <input
-                    value={name}
-                    type="text"
-                    placeholder="unitPrice"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </th>
-              </>
-            )}
-          </tr>
-        );
-      case "pastOrders":
-        return (
-          <tr>
-            <th>
-              <input
-                value={name}
-                type="text"
-                placeholder="Type"
-                onChange={(e) => setName(e.target.value)}
-              />
-            </th>
-            <th>Price</th>
-            
-          </tr>
-        );
-      default:
-        return null;
+  // Render table columns dynamically based on tableColumn count
+  const renderTableColumns = () => {
+    return subCategory.map((category:any, index:any) => (
+      <th key={`column-${index}`}>{category.title}</th>
+    ));
+  };
+
+  // Render table rows dynamically based on subCategory and tableColumn
+  const renderTableRows = () => {
+    const rows = [];
+    for (let i = 0; i < tableColumn; i++) {
+      rows.push(
+        <tr key={`row-${i}`}>
+          {subCategory.map((category:any, index:any) => (
+            <td key={`cell-${i}-${index}`}>{category.example}</td>
+          ))}
+        </tr>
+      );
     }
+    return rows;
   };
 
   return (
-    <div className="">
-      <div className="">
-        <div className="input-group">
-          <label>Type:</label>
-          <select value={type} onChange={(e) => setType(e.target.value)}>
-            <option value="option1">String</option>
-            <option value="option2">Number</option>
-          </select>
-        </div>
-        {title === "items" || title === "pastOrders" ? (
-          <table className="custom-table-pastOrder">
-            <thead>{renderTableHead()}</thead>
-            <tbody>
-              <tr>
-                <td>cat food</td>
-                {title === "items" ? <><td>cat food</td><td>100</td></> : <td>100</td>}
-              </tr>
-            </tbody>
+    <div>
+      <table className="custom-table-pastOrder">
+        <thead>
+          <tr>{renderTableColumns()}</tr>
+        </thead>
+        <tbody>{renderTableRows()}</tbody>
+      </table>
+      <div className="input-group">
+        <label>Example:</label>
+        <div className="table-wrapper">
+          <table className="custom-table">
+            <thead>
+            <tr>{renderTableColumns()}</tr>
+            </thead>
+            <tbody>{renderTableRows()}</tbody>
           </table>
-        ) : null}
-
-        {title === "pastOrders" && (
-          <div className="input-group">
-            <label>Example:</label>
-            <div className="table-wrapper">
-              <table className="custom-table">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>cat food</td>
-                    <td>100</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
-        <button className="custom-button" onClick={handleSave}>
-          Save
-        </button>
+        </div>
       </div>
     </div>
   );

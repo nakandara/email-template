@@ -28,15 +28,15 @@
     date: "2024-01091",
     guests: [
       {
-        name: "cat food",
+        namel: "cat food",
         email: "pramod@gmail.com",
       },
       {
-        name: "cat food",
+        namel: "cat food",
         email: "navod123@gmail",
       },
       {
-        name: "cat food",
+        namel: "cat food",
         email: "laksitha@gmail.com",
       },
     ],
