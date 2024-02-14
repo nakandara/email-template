@@ -19,7 +19,11 @@ const PastOrders: React.FC<CustomCardProps> = ({
   tableColumn,
 }) => {
   const { selectPayLoad } = useCardContext();
-
+  console.log(tableColumn, "tableColumn");
+  console.log(card_Name, "card_Name");
+  console.log(typeItem, "typeItem");
+  console.log(subCategory, "subCategory");
+  console.log(title, "title");
 
   const [type, setType] = useState("");
   const [name, setName] = useState("");

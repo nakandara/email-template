@@ -85,11 +85,11 @@
   .ul-class {
     list-style: none;
     
-    margin: 0;
+    margin: 20px;
     padding: 0;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10px; /* Adjust the gap between items as needed */
+    grid-gap: 40px; /* Adjust the gap between items as needed */
   }
   
   .cardItem {
@@ -107,6 +107,14 @@
     box-shadow: 10px 4px 10px rgba(0, 0, 0, 0.1);
   
   }
+
+  .cardItem:hover {
+  
+    transform: scale(1.20);
+    cursor: pointer;
+    border: 2px solid #6cd6df;
+  }
+  
 
   .horizontal-line {
     border-top: 2px solid #ccc; /* Adjust the color and thickness as needed */
@@ -148,7 +156,7 @@
 
   .item-heading{
     font-size: 25px;
-    color: #2f3432;
+    color: #085133;
     font-family: 'Open Sans', 'PF DinText Pro', Arial, Helvetica, sans-serif;
     line-height: 1.71428571;
     font-weight: 700;

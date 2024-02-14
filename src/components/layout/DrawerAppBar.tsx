@@ -85,9 +85,9 @@ export default function DrawerAppBar(props: Props) {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            sx={{ flexGrow: 1,fontStyle:"italic", display: { xs: "none", sm: "block" } }}
           >
-            EMAIL TEMPLATE
+              <img style={{height:"80px"}} src="/media/emailTemplate.png" alt="girl one"/>
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (

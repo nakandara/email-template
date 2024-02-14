@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { useCardContext } from "../context/CardContext";
 import { Box, Modal, Typography } from "@mui/material";
 
-const sampleItems = ["EVENT", "USER", "ORDER", "DATA"];
+const sampleItems = ["EVENT", "USER", "ORDER", "DATA","PENDING CAMPAIGN ONE","PENDING CAMPAIGN TWO","PENDING CAMPAIGN THREE"];
 
 const EventModalContent = () => {
   
@@ -103,7 +103,12 @@ const PayloadList = () => {
         return <OrderModalContent />;
         case "DATA":
           return <DataModalContent />;
-      // Add more cases for other items if needed
+          case "PENDING CAMPAIGN ONE":
+            return <DataModalContent />;
+            case "PENDING CAMPAIGN TWO":
+              return <DataModalContent />;
+              case "PENDING CAMPAIGN THREE":
+                return <DataModalContent />;
       default:
         return null;
     }
