@@ -7,7 +7,7 @@ interface CustomCardProps {
   card_Name: any;
   typeItem: string;
   subCategory: any;
-  tableColumn: number; // Change the type to number
+  tableColumn: number;
   name: string;
 }
 
@@ -16,31 +16,43 @@ const PastOrders: React.FC<CustomCardProps> = ({
   title,
   typeItem,
   subCategory,
-  tableColumn, // Access the tableColumn prop
+  tableColumn,
 }) => {
-  const {
+  const { selectPayLoad } = useCardContext();
 
-    selectPayLoad,
-  } = useCardContext();
 
   const [type, setType] = useState("");
   const [name, setName] = useState("");
 
-  const handleSave = () => {
+  const handleSave = () => {};
 
-  };
-
-  // Render table columns dynamically based on tableColumn count
   const renderTableColumns = () => {
+    return subCategory.map((category: any, index: any) => (
+      <th key={`column-${index}`}>
+        {card_Name && category.title === card_Name.split(".")[1] ? (
+          <input
+            type="text"
+            placeholder={category.title}
+            value={category.title}
+            onChange={(e) => {
+              
+            }}
+          />
+        ) : (
+          category.title
+        )}
+      </th>
+    ));
+  };
+  const renderExampleTableColumns = () => {
     return subCategory.map((category: any, index: any) => (
       <th key={`column-${index}`}>{category.title}</th>
     ));
   };
 
-  // Render table rows dynamically based on subCategory and tableColumn
   const renderTableRows = () => {
     const rows = [];
-    for (let i = 0; i < tableColumn; i++) {
+    for (let i = 0; i < tableColumn - (tableColumn - 1); i++) {
       rows.push(
         <tr key={`row-${i}`}>
           {subCategory.map((category: any, index: any) => (
@@ -65,12 +77,15 @@ const PastOrders: React.FC<CustomCardProps> = ({
         <div className="table-wrapper">
           <table className="custom-table">
             <thead>
-              <tr>{renderTableColumns()}</tr>
+              <tr>{renderExampleTableColumns()}</tr>
             </thead>
             <tbody>{renderTableRows()}</tbody>
           </table>
         </div>
       </div>
+      <button className="custom-button" onClick={handleSave}>
+        Save
+      </button>
     </div>
   );
 };
