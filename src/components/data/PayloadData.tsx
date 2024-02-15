@@ -82,9 +82,84 @@
   },
 ];
 
+const payloadPending_campaign_one = [
+  {
+    id: "#223033",
+    totalSubmit: "4000",
+    paymentMethod: "BANK_TRANSFER",
+    items: [
+      {
+        name: "HB Pencil",
+        quantity: 20,
+        shape: [
+          {
+            unicName: "big",
+            count: 20,
+            unitPrice: 100,
+          },
+          {
+            unicName: "small",
+            count: 10,
+            unitPrice: 50,
+          },
+          {
+            unicName: "medium",
+            count: 20,
+            unitPrice: 70,
+          },
+        ],
+       
+      },
+      {
+        name: "Blue Pencil",
+        quantity: 10,
+        shape: [
+          {
+            name: "big",
+            quantity: 20,
+            unitPrice: 100,
+          },
+          {
+            name: "small",
+            quantity: 10,
+            unitPrice: 50,
+          },
+          {
+            name: "medium",
+            quantity: 20,
+            unitPrice: 70,
+          },
+        ],
+      },
+      {
+        name: "Red Pencil",
+        quantity: 20,
+        shape: [
+          {
+            name: "big",
+            quantity: 20,
+            unitPrice: 100,
+          },
+          {
+            name: "small",
+            quantity: 10,
+            unitPrice: 50,
+          },
+          {
+            name: "medium",
+            quantity: 20,
+            unitPrice: 70,
+          },
+        ],
+      },
+    ],
+  },
+]
+
 export const events = [
   { name: "Data Created", payload: payloadData },
   { name: "Order Created", payload: payloadEvent },
   { name: "Event Created", payload: payloadOrder },
   { name: "User Created", payload: payloadUser },
+  { name: "Submit Created", payload: payloadPending_campaign_one},
 ];

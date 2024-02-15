@@ -113,10 +113,11 @@ const CustomizedSteppers: React.FC<CustomCardProps> = ({
       case "ORDER":
       case "USER":
       case "DATA":
-        return 1; // "Create an ad group"
+      case "SUBMIT":
+      return 1; // "Create an ad group"
       case "FIRST":
       default:
-        return 0; // "Select campaign settings"
+      return 0; // "Select campaign settings"
     }
   };
 

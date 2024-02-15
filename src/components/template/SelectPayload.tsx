@@ -55,6 +55,7 @@ const SelectPayload = () => {
               {payLoadData === "ORDER" && <Category2 payload={"ORDER"} />}
               {payLoadData === "USER" && <Category2 payload={"USER"} />}
               {payLoadData === "DATA" && <Category2 payload={"DATA"} />}
+              {payLoadData === "SUBMIT" && <Category2 payload={"SUBMIT"} />}
 
                 {payLoadData === "FIRST" && <PayloadList />}
               </Item>

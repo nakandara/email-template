@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { useCardContext } from "../context/CardContext";
 import { Box, Modal, Typography } from "@mui/material";
 
-const sampleItems = ["EVENT", "USER", "ORDER", "DATA","PENDING CAMPAIGN ONE","PENDING CAMPAIGN TWO","PENDING CAMPAIGN THREE"];
+const sampleItems = ["EVENT", "USER", "ORDER", "DATA","SUBMIT","PENDING CAMPAIGN TWO","PENDING CAMPAIGN THREE"];
 
 const EventModalContent = () => {
   
@@ -72,6 +72,28 @@ const DataModalContent = () => {
   );
 };
 
+const SubmitModalContent = () => {
+  return (
+    <>
+      <Typography variant="body1">ID: #223033</Typography>
+      <Typography variant="body1">Total Submit: 4000</Typography>
+      <Typography variant="body1">Payment Method: BANK_TRANSFER</Typography>
+      <Typography variant="body1">Items:</Typography>
+      <ul>
+        <li>HB Pencil - Quantity: 20, Unit Price: 100</li>
+        <ul>
+        <li>HB Pencil - Quantity: 20, Unit Price: 100</li>
+          
+        <li>Blue Pencil - Quantity: 10, Unit Price: 50</li>
+        <li>Red Pencil - Quantity: 20, Unit Price: 70</li>
+      </ul>
+        <li>Blue Pencil - Quantity: 10, Unit Price: 50</li>
+        <li>Red Pencil - Quantity: 20, Unit Price: 70</li>
+      </ul>
+    </>
+  );
+};
+
 const PayloadList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
@@ -103,8 +125,8 @@ const PayloadList = () => {
         return <OrderModalContent />;
         case "DATA":
           return <DataModalContent />;
-          case "PENDING CAMPAIGN ONE":
-            return <DataModalContent />;
+          case "SUBMIT":
+            return <SubmitModalContent />;
             case "PENDING CAMPAIGN TWO":
               return <DataModalContent />;
               case "PENDING CAMPAIGN THREE":

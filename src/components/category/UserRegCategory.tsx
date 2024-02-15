@@ -76,11 +76,17 @@ const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
   const UserCreatedEvent = events.find(
     (event) => event.name === "User Created"
   );
+  const SubmitCreatedEvent = events.find(
+    (event) => event.name === "Submit Created"
+  );
+
+  
 
   const dataCreatedPayload = dataCreatedEvent?.payload || [];
   const orderCreatedPayload = orderCreatedEvent?.payload || [];
   const eventCreatedPayload = EventCreatedEvent?.payload || [];
   const userCreatedPayload = UserCreatedEvent?.payload || [];
+  const SubmitCreatedPayload = SubmitCreatedEvent?.payload || [];
 
   const { outPayLoad, setSelectPayLoad } = useCardContext();
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
@@ -153,8 +159,11 @@ const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
   } else if (payload === "USER") {
     payloadDataT = userCreatedPayload[0];
     setSelectPayLoad(userCreatedPayload[0]);
+    
+  } else if (payload === "SUBMIT") {
+    payloadDataT = SubmitCreatedPayload[0];
+    setSelectPayLoad(SubmitCreatedPayload[0]);
   }
-
   const newData: DataItem[] = transformPayloadToData(payloadDataT);
 
   const transformedData: Category[] = newData.map(transformDataToCategory);
