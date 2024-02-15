@@ -1,5 +1,12 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { useCardContext } from "../context/CardContext";
+import {
+  extractKeys,
+  initialState,
+  handleChange,
+  handleTypeChange,
+  handleSave,
+} from "../custom/CustomCardLogic";
 
 interface CustomCardProps {
   title: string;
@@ -18,17 +25,16 @@ const PastOrders: React.FC<CustomCardProps> = ({
   subCategory,
   tableColumn,
 }) => {
-  const { selectPayLoad } = useCardContext();
-  console.log(tableColumn, "tableColumn");
-  console.log(card_Name, "card_Name");
-  console.log(typeItem, "typeItem");
-  console.log(subCategory, "subCategory");
-  console.log(title, "title");
+  const { selectPayLoad, setOutPayLoad } = useCardContext();
+  const keyList = extractKeys(selectPayLoad);
 
-  const [type, setType] = useState("");
-  const [name, setName] = useState("");
+  const [payload, setPayload] = useState<{
+    [key: string]: { value: string; type: string };
+  }>(initialState(keyList));
 
-  const handleSave = () => {};
+  useEffect(() => {
+    localStorage.setItem("payload", JSON.stringify(payload));
+  }, [payload]);
 
   const renderTableColumns = () => {
     return subCategory.map((category: any, index: any) => (
@@ -37,10 +43,16 @@ const PastOrders: React.FC<CustomCardProps> = ({
           <input
             type="text"
             placeholder={category.title}
-            value={category.title}
-            onChange={(e) => {
-              
-            }}
+            value={payload[card_Name]?.value || ""}
+            onChange={(e) =>
+              handleChange(
+                card_Name,
+                e.target.value,
+                payload[card_Name]?.type || "",
+                payload,
+                setPayload
+              )
+            }
           />
         ) : (
           category.title
@@ -87,7 +99,10 @@ const PastOrders: React.FC<CustomCardProps> = ({
           </table>
         </div>
       </div>
-      <button className="custom-button" onClick={handleSave}>
+      <button
+        className="custom-button"
+        onClick={() => handleSave(payload, setOutPayLoad)}
+      >
         Save
       </button>
     </div>
