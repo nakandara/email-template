@@ -64,30 +64,32 @@ const transformDataToCategory = (data: DataItem): Category => {
 
 const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
   console.log(events);
-  const dataCreatedEvent = events.find(
-    (event) => event.name === "Data Created"
-  );
-  const orderCreatedEvent = events.find(
-    (event) => event.name === "Order Created"
-  );
-  const EventCreatedEvent = events.find(
-    (event) => event.name === "Event Created"
-  );
-  const UserCreatedEvent = events.find(
-    (event) => event.name === "User Created"
-  );
-  const SubmitCreatedEvent = events.find(
-    (event) => event.name === "Submit Created"
-  );
+  const jsonData = JSON.stringify(events, null, 2);
+  
+  const payloadMap: { [key: string]: any[] } = {};
+
+  events.forEach(event => {
+    payloadMap[event.name] = event.payload;
+  });
+  
+  const getPayloadByEventName = (eventName: string) => {
+    return payloadMap[eventName] || [];
+  };
+  
+  // Usage
 
   
+  
+  const payloadVariables: { [key: string]: any } = {};
 
-  const dataCreatedPayload = dataCreatedEvent?.payload || [];
-  const orderCreatedPayload = orderCreatedEvent?.payload || [];
-  const eventCreatedPayload = EventCreatedEvent?.payload || [];
-  const userCreatedPayload = UserCreatedEvent?.payload || [];
-  const SubmitCreatedPayload = SubmitCreatedEvent?.payload || [];
+ const testOne = events.forEach(event => {
+    const eventName = event.name;
+    payloadVariables[`${eventName.toLowerCase()}CreatedPayload`] = getPayloadByEventName(eventName);
+  });
+  
 
+ 
+  
   const { outPayLoad, setSelectPayLoad } = useCardContext();
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -147,22 +149,10 @@ const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
   };
 
   let payloadDataT;
-  if (payload === "EVENT") {
-    payloadDataT = eventCreatedPayload[0];
-    setSelectPayLoad(eventCreatedPayload[0]);
-  } else if (payload === "ORDER") {
-    payloadDataT = orderCreatedPayload[0];
-    setSelectPayLoad(orderCreatedPayload[0]);
-  } else if (payload === "DATA") {
-    payloadDataT = dataCreatedPayload[0];
-    setSelectPayLoad(dataCreatedPayload[0]);
-  } else if (payload === "USER") {
-    payloadDataT = userCreatedPayload[0];
-    setSelectPayLoad(userCreatedPayload[0]);
-    
-  } else if (payload === "SUBMIT") {
-    payloadDataT = SubmitCreatedPayload[0];
-    setSelectPayLoad(SubmitCreatedPayload[0]);
+
+  if (payload && payloadVariables[payload.toLowerCase() + "CreatedPayload"]) {
+    payloadDataT = payloadVariables[payload.toLowerCase() + "CreatedPayload"][0];
+    setSelectPayLoad(payloadVariables[payload.toLowerCase() + "CreatedPayload"][0]);
   }
   const newData: DataItem[] = transformPayloadToData(payloadDataT);
 

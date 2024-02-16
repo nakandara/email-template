@@ -84,12 +84,13 @@
   
   .ul-class {
     list-style: none;
-    
-    margin: 20px;
+      max-height: 650px; /* Set a fixed height */
+  overflow-y: auto; /* Enable vertical scrolling */
+    margin: 15px;
     padding: 0;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 40px; /* Adjust the gap between items as needed */
+    grid-gap: 35px; /* Adjust the gap between items as needed */
   }
   
   .cardItem {

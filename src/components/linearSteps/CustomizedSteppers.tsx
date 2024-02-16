@@ -14,6 +14,7 @@ import StepConnector, {
 } from "@mui/material/StepConnector";
 import { StepIconProps } from "@mui/material/StepIcon";
 import { useCardContext } from "../context/CardContext";
+import { events } from "../data/PayloadData"
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -106,20 +107,17 @@ const CustomizedSteppers: React.FC<CustomCardProps> = ({
   };
 
   const { payLoadData ,setPayLoadData} = useCardContext();
-
+  
   const getActiveStep = () => {
-    switch (payLoadData) {
-      case "EVENT":
-      case "ORDER":
-      case "USER":
-      case "DATA":
-      case "SUBMIT":
+    // Check if payLoadData exists in any of the event names
+    const eventData = events.find(event => event.name === payLoadData);
+    if (eventData) {
       return 1; // "Create an ad group"
-      case "FIRST":
-      default:
+    } else {
       return 0; // "Select campaign settings"
     }
   };
+  
 
   // Set the active step based on the value of payLoadData
   React.useEffect(() => {

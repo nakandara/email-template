@@ -156,10 +156,26 @@ const payloadPending_campaign_one = [
   },
 ]
 
+const progressUser = [
+  {
+    name: "Ruwan",
+    email: "ruwan@gmail.com0",
+    dob: "2024-04-01",
+    address: {
+      addressLine1: "Madurupitiya",
+      addressLine2: "Loluwagoda",
+      city: "Mirigama",
+      zipCode: "11204",
+    },
+  },
+];
+
+
 export const events = [
-  { name: "Data Created", payload: payloadData },
-  { name: "Order Created", payload: payloadEvent },
-  { name: "Event Created", payload: payloadOrder },
-  { name: "User Created", payload: payloadUser },
-  { name: "Submit Created", payload: payloadPending_campaign_one},
+  { name: "EVENT", payload: payloadData },
+  { name: "ORDER", payload: payloadEvent },
+  { name: "USER", payload: payloadOrder },
+  { name: "DATA", payload: payloadUser },
+  { name: "SUBMIT", payload: payloadPending_campaign_one},
+  { name: "PROGRESS", payload: progressUser},
 ];

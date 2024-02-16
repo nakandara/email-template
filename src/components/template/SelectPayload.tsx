@@ -8,6 +8,8 @@ import "./Template.css";
 import PayloadList from "./PayloadList";
 import { useCardContext } from "../context/CardContext";
 import Category2 from "../category/UserRegCategory";
+
+import { events } from "../data/PayloadData";
 import { useState } from "react";
 
 const steps = [
@@ -19,9 +21,6 @@ const steps = [
 
 
 const Item = styled(Paper)(({ theme }) => ({
-
-  
-  
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
   padding: theme.spacing(1),
@@ -31,12 +30,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const SelectPayload = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const {
-    payLoadData
-  } = useCardContext();
-
-
-
+  const { payLoadData } = useCardContext();
 
   return (
     <div className="template_card">
@@ -51,13 +45,13 @@ const SelectPayload = () => {
           <Grid container spacing={2}>
             <Grid xs={12}>
               <Item>
-              {payLoadData === "EVENT" &&  <Category2 payload={"EVENT"} />}
-              {payLoadData === "ORDER" && <Category2 payload={"ORDER"} />}
-              {payLoadData === "USER" && <Category2 payload={"USER"} />}
-              {payLoadData === "DATA" && <Category2 payload={"DATA"} />}
-              {payLoadData === "SUBMIT" && <Category2 payload={"SUBMIT"} />}
-
                 {payLoadData === "FIRST" && <PayloadList />}
+                {events.map(
+                  (event, index) =>
+                    payLoadData === event.name && (
+                      <Category2 key={index} payload={event.name} />
+                    )
+                )}
               </Item>
             </Grid>
           </Grid>

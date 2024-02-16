@@ -3,11 +3,19 @@ import "./Template.css";
 import Button from "@mui/material/Button";
 import { useCardContext } from "../context/CardContext";
 import { Box, Modal, Typography } from "@mui/material";
+import { events } from "../data/PayloadData";
 
-const sampleItems = ["EVENT", "USER", "ORDER", "DATA","SUBMIT","PENDING CAMPAIGN TWO","PENDING CAMPAIGN THREE"];
+const sampleItems = [
+  "EVENT",
+  "USER",
+  "ORDER",
+  "DATA",
+  "SUBMIT",
+  "PENDING CAMPAIGN TWO",
+  "PENDING CAMPAIGN THREE",
+];
 
 const EventModalContent = () => {
-  
   return (
     <>
       <Typography variant="body1">ID: #223033</Typography>
@@ -82,11 +90,11 @@ const SubmitModalContent = () => {
       <ul>
         <li>HB Pencil - Quantity: 20, Unit Price: 100</li>
         <ul>
-        <li>HB Pencil - Quantity: 20, Unit Price: 100</li>
-          
-        <li>Blue Pencil - Quantity: 10, Unit Price: 50</li>
-        <li>Red Pencil - Quantity: 20, Unit Price: 70</li>
-      </ul>
+          <li>HB Pencil - Quantity: 20, Unit Price: 100</li>
+
+          <li>Blue Pencil - Quantity: 10, Unit Price: 50</li>
+          <li>Red Pencil - Quantity: 20, Unit Price: 70</li>
+        </ul>
         <li>Blue Pencil - Quantity: 10, Unit Price: 50</li>
         <li>Red Pencil - Quantity: 20, Unit Price: 70</li>
       </ul>
@@ -97,25 +105,20 @@ const SubmitModalContent = () => {
 const PayloadList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
-  const {
-    setPayLoadData
-  } = useCardContext();
+  const { setPayLoadData } = useCardContext();
 
-  const handleModalOpen = (event: React.MouseEvent<HTMLButtonElement>, item: any) => {
+  const handleModalOpen = (event: any, item: any) => {
     // Prevent the event from propagating to the parent element
     event.stopPropagation();
     setSelectedItem(item);
     setIsModalOpen(true);
   };
-  
 
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
 
   const renderModalContent = () => {
-  
-
     switch (selectedItem) {
       case "EVENT":
         return <EventModalContent />;
@@ -123,14 +126,14 @@ const PayloadList = () => {
         return <UserModalContent />;
       case "ORDER":
         return <OrderModalContent />;
-        case "DATA":
-          return <DataModalContent />;
-          case "SUBMIT":
-            return <SubmitModalContent />;
-            case "PENDING CAMPAIGN TWO":
-              return <DataModalContent />;
-              case "PENDING CAMPAIGN THREE":
-                return <DataModalContent />;
+      case "DATA":
+        return <DataModalContent />;
+      case "SUBMIT":
+        return <SubmitModalContent />;
+      case "PENDING CAMPAIGN TWO":
+        return <DataModalContent />;
+      case "PENDING CAMPAIGN THREE":
+        return <DataModalContent />;
       default:
         return null;
     }
@@ -138,33 +141,68 @@ const PayloadList = () => {
 
   const NextStep = (item: any) => {
     console.log(item);
-    setPayLoadData(item)
+    setPayLoadData(item);
   };
 
   return (
     <div className="card-container">
-      <div className="card">
-        <ul className="ul-class">
-          {sampleItems.map((item, index) => (
-            <li className="cardItem" onClick={() => NextStep(item)} key={index}>
-              <div className="item-heading"> {item}</div>
-              <div className="horizontal-line"></div>
-              <div>This way, the card will adapt its size based on the screen width,</div>
-              <div className="button-container">
-               
-                <Button
-                 onClick={(event) => handleModalOpen(event, item)}
-                  sx={{ backgroundColor: "blue", borderRadius: "100px" }}
-                  variant="contained"
-                  color="success"
-                >
-                  View
-                </Button>
-              </div>
-            </li>
-          ))}
+      <div className="">
+        <ul className="">
+          <li className="cardItem">
+            <div className="item-heading"> </div> {/* Display event name */}
+            <div className="horizontal-line"></div>
+            <div>
+              This way, the card will adapt its size based on the screen width,
+            </div>
+            <div className="button-container">
+              <Button
+                // Pass event name
+                sx={{ backgroundColor: "blue", borderRadius: "100px" }}
+                variant="contained"
+                color="success"
+              >
+                ADD +
+              </Button>
+            </div>
+          </li>
         </ul>
       </div>
+
+      <div className="card">
+        <ul className="ul-class">
+          {events.map(
+            (
+              event,
+              index 
+            ) => (
+              <li
+                className="cardItem"
+                onClick={() => NextStep(event.name)}
+                key={index}
+              >
+                <div className="item-heading"> {event.name}</div>{" "}
+                {/* Display event name */}
+                <div className="horizontal-line"></div>
+                <div>
+                  This way, the card will adapt its size based on the screen
+                  width,
+                </div>
+                <div className="button-container">
+                  <Button
+                    onClick={(e) => handleModalOpen(e, event.name)} // Pass event name
+                    sx={{ backgroundColor: "blue", borderRadius: "100px" }}
+                    variant="contained"
+                    color="success"
+                  >
+                    View
+                  </Button>
+                </div>
+              </li>
+            )
+          )}
+        </ul>
+      </div>
+
       <Modal
         open={isModalOpen}
         onClose={handleModalClose}
