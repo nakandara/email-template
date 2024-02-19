@@ -5,148 +5,64 @@ import { useCardContext } from "../context/CardContext";
 import { Box, Modal, Typography } from "@mui/material";
 import { events } from "../data/PayloadData";
 
-const sampleItems = [
-  "EVENT",
-  "USER",
-  "ORDER",
-  "DATA",
-  "SUBMIT",
-  "PENDING CAMPAIGN TWO",
-  "PENDING CAMPAIGN THREE",
-];
-
-const EventModalContent = () => {
-  return (
-    <>
-      <Typography variant="body1">ID: #223033</Typography>
-      <Typography variant="body1">Total Price: 4000</Typography>
-      <Typography variant="body1">Payment Method: BANK_TRANSFER</Typography>
-      <Typography variant="body1">Items:</Typography>
-      <ul>
-        <li>HB Pencil - Quantity: 20, Unit Price: 100</li>
-        <li>Blue Pencil - Quantity: 10, Unit Price: 50</li>
-        <li>Red Pencil - Quantity: 20, Unit Price: 70</li>
-      </ul>
-    </>
-  );
+type Payload = {
+  [key: string]: string | Payload;
 };
 
-const UserModalContent = () => {
-  return (
-    <>
-      <Typography variant="body1">Name: Ruwan</Typography>
-      <Typography variant="body1">Email: ruwan@gmail.com</Typography>
-      <Typography variant="body1">Date OF Birthday: 2024-01091</Typography>
-      <Typography variant="body1">Address:</Typography>
-      <ul>
-        <li>Line 1 - Samagi Mawatha</li>
-        <li>Line 2 - Kaduwela</li>
-        <li>City - Panadura</li>
-        <li>Zip Code - 11234</li>
-      </ul>
-    </>
-  );
+type PayloadRendererProps = {
+  payload: Payload;
 };
 
-const OrderModalContent = () => {
-  return (
-    <>
-      <Typography variant="body1">ID: #223033</Typography>
-      <Typography variant="body1">Total Price: 4000</Typography>
-      <Typography variant="body1">Payment Method: BANK_TRANSFER</Typography>
-      <Typography variant="body1">Items:</Typography>
-      <ul>
-        <li>HB Pencil - Quantity: 20, Unit Price: 100</li>
-        <li>Blue Pencil - Quantity: 10, Unit Price: 50</li>
-        <li>Red Pencil - Quantity: 20, Unit Price: 70</li>
-      </ul>
-    </>
-  );
-};
+const generateJSXFromPayload = (payload: Payload): JSX.Element[] => {
+  const elements: JSX.Element[] = [];
 
-const DataModalContent = () => {
-  return (
-    <>
-      <Typography variant="body1">ID: #223033</Typography>
-      <Typography variant="body1">Total Price: 4000</Typography>
-      <Typography variant="body1">Payment Method: BANK_TRANSFER</Typography>
-      <Typography variant="body1">Items:</Typography>
-      <ul>
-        <li>HB Pencil - Quantity: 20, Unit Price: 100</li>
-        <li>Blue Pencil - Quantity: 10, Unit Price: 50</li>
-        <li>Red Pencil - Quantity: 20, Unit Price: 70</li>
-      </ul>
-    </>
-  );
-};
+  for (let key in payload) {
+    if (typeof payload[key] === "string") {
+      elements.push(<p key={key}>{`${key}: ${payload[key]}`}</p>);
+    } else if (typeof payload[key] === "object") {
+      elements.push(
+        <div key={key}>{generateJSXFromPayload(payload[key] as Payload)}</div>
+      );
+    }
+  }
 
-const SubmitModalContent = () => {
-  return (
-    <>
-      <Typography variant="body1">ID: #223033</Typography>
-      <Typography variant="body1">Total Submit: 4000</Typography>
-      <Typography variant="body1">Payment Method: BANK_TRANSFER</Typography>
-      <Typography variant="body1">Items:</Typography>
-      <ul>
-        <li>HB Pencil - Quantity: 20, Unit Price: 100</li>
-        <ul>
-          <li>HB Pencil - Quantity: 20, Unit Price: 100</li>
-
-          <li>Blue Pencil - Quantity: 10, Unit Price: 50</li>
-          <li>Red Pencil - Quantity: 20, Unit Price: 70</li>
-        </ul>
-        <li>Blue Pencil - Quantity: 10, Unit Price: 50</li>
-        <li>Red Pencil - Quantity: 20, Unit Price: 70</li>
-      </ul>
-    </>
-  );
+  return elements;
 };
 
 const PayloadList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
+  const [newPayload, setNewPayload] = useState<Payload | null>(null);
   const { setPayLoadData } = useCardContext();
 
   const handleModalOpen = (event: any, item: any) => {
-    // Prevent the event from propagating to the parent element
     event.stopPropagation();
     setSelectedItem(item);
     setIsModalOpen(true);
+    for (let i = 0; i < events.length; i++) {
+      if (events[i].name === item) {
+        
+        setNewPayload(events[i].payload[0] as Payload);
+        break;
+      }
+    }
   };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
 
-  const renderModalContent = () => {
-    switch (selectedItem) {
-      case "EVENT":
-        return <EventModalContent />;
-      case "USER":
-        return <UserModalContent />;
-      case "ORDER":
-        return <OrderModalContent />;
-      case "DATA":
-        return <DataModalContent />;
-      case "SUBMIT":
-        return <SubmitModalContent />;
-      case "PENDING CAMPAIGN TWO":
-        return <DataModalContent />;
-      case "PENDING CAMPAIGN THREE":
-        return <DataModalContent />;
-      default:
-        return null;
-    }
+  const NextStep = (item: any) => {
+    setPayLoadData(item);
   };
 
-  const NextStep = (item: any) => {
-    console.log(item);
-    setPayLoadData(item);
+  const PayloadRenderer: React.FC<PayloadRendererProps> = ({ payload }) => {
+    return <div>{generateJSXFromPayload(payload)}</div>;
   };
 
   return (
     <div className="card-container">
-      <div className="">
+     <div className="">
         <ul className="">
           <li className="cardItem">
             <div className="item-heading"> </div> {/* Display event name */}
@@ -156,7 +72,6 @@ const PayloadList = () => {
             </div>
             <div className="button-container">
               <Button
-                // Pass event name
                 sx={{ backgroundColor: "blue", borderRadius: "100px" }}
                 variant="contained"
                 color="success"
@@ -170,36 +85,31 @@ const PayloadList = () => {
 
       <div className="card">
         <ul className="ul-class">
-          {events.map(
-            (
-              event,
-              index 
-            ) => (
-              <li
-                className="cardItem"
-                onClick={() => NextStep(event.name)}
-                key={index}
-              >
-                <div className="item-heading"> {event.name}</div>{" "}
-                {/* Display event name */}
-                <div className="horizontal-line"></div>
-                <div>
-                  This way, the card will adapt its size based on the screen
-                  width,
-                </div>
-                <div className="button-container">
-                  <Button
-                    onClick={(e) => handleModalOpen(e, event.name)} // Pass event name
-                    sx={{ backgroundColor: "blue", borderRadius: "100px" }}
-                    variant="contained"
-                    color="success"
-                  >
-                    View
-                  </Button>
-                </div>
-              </li>
-            )
-          )}
+          {events.map((event, index) => (
+            <li
+              className="cardItem"
+              onClick={() => NextStep(event.name)}
+              key={index}
+            >
+              <div className="item-heading"> {event.name}</div>{" "}
+              {/* Display event name */}
+              <div className="horizontal-line"></div>
+              <div>
+                This way, the card will adapt its size based on the screen
+                width,
+              </div>
+              <div className="button-container">
+                <Button
+                  onClick={(e) => handleModalOpen(e, event.name)} // Pass event name
+                  sx={{ backgroundColor: "blue", borderRadius: "100px" }}
+                  variant="contained"
+                  color="success"
+                >
+                  View
+                </Button>
+              </div>
+            </li>
+          ))}
         </ul>
       </div>
 
@@ -217,7 +127,9 @@ const PayloadList = () => {
             id="modal-modal-description"
             sx={{ mt: 2, maxHeight: "400px", overflowY: "auto" }}
           >
-            {renderModalContent()}
+            {newPayload && (
+              <PayloadRenderer payload={newPayload} />
+            )}
           </Typography>
         </Box>
       </Modal>
