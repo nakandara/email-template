@@ -109,17 +109,17 @@ const CustomizedSteppers: React.FC<CustomCardProps> = ({
   const { payLoadData ,setPayLoadData} = useCardContext();
   
   const getActiveStep = () => {
-    // Check if payLoadData exists in any of the event names
+    
     const eventData = events.find(event => event.name === payLoadData);
     if (eventData) {
-      return 1; // "Create an ad group"
+      return 1; 
     } else {
-      return 0; // "Select campaign settings"
+      return 0;
     }
   };
   
 
-  // Set the active step based on the value of payLoadData
+
   React.useEffect(() => {
     setActiveStep(getActiveStep());
   }, [payLoadData, setActiveStep]);

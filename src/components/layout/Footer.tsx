@@ -16,14 +16,14 @@ const Footer = () => {
           <div className="footer-column">
           <h3>Quick Links</h3>
           <ul>
-            {/* Use Link component for navigation */}
+          
             <li>
               <Link to="/">Home</Link>
             </li>
             <li>
               <Link to="/about">About</Link>
             </li>
-            {/* Add more links as needed */}
+           
             <li>
               <Link to="/post">Payment Plane</Link>
             </li>
