@@ -72,45 +72,6 @@ export const LastTransformPayload = (
 // Your interface declarations and function definition
 
 // Example payload
-const payload: InputVariable[] = [
-  {
-    variable: "name",
-    example: "Ruwan",
-    type: "string",
-  },
-  {
-    variable: "address",
-    example: null,
-    type: "object",
-    keys: [
-      {
-        variable: "addressLine1",
-        example: "Madurupitiya",
-        type: "string",
-      },
-      {
-        variable: "addressLine2",
-        example: "Loluwagoda",
-        type: "string",
-      },
-      {
-        variable: "city",
-        example: "Mirigama",
-        type: "string",
-      },
-      {
-        variable: "zipCode",
-        example: "11204",
-        type: "string",
-      },
-    ],
-  },
-  {
-    variable: "birthday",
-    example: "1888-07-17T00:00:00.000Z",
-    type: "date",
-  },
-];
 
 type InputItem = {
   [key: string]: {
