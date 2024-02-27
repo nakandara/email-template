@@ -39,12 +39,11 @@ const PayloadList = () => {
     event.stopPropagation();
     setSelectedItem(item);
     setIsModalOpen(true);
-    for (let i = 0; i < events.length; i++) {
-      if (events[i].name === item) {
-        
-        setNewPayload(events[i].payload[0] as Payload);
-        break;
-      }
+
+    const foundEvent = events.find((eventItem) => eventItem.name === item);
+
+    if (foundEvent) {
+      setNewPayload(foundEvent.payload[0] as Payload);
     }
   };
 
@@ -62,7 +61,7 @@ const PayloadList = () => {
 
   return (
     <div className="card-container">
-     <div className="">
+      <div className="">
         <ul className="">
           <li className="cardItem">
             <div className="item-heading"> </div> {/* Display event name */}
@@ -127,9 +126,7 @@ const PayloadList = () => {
             id="modal-modal-description"
             sx={{ mt: 2, maxHeight: "400px", overflowY: "auto" }}
           >
-            {newPayload && (
-              <PayloadRenderer payload={newPayload} />
-            )}
+            {newPayload && <PayloadRenderer payload={newPayload} />}
           </Typography>
         </Box>
       </Modal>
