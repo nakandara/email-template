@@ -24,6 +24,9 @@ import DashboardSelectEvents from "../../components/SelectEvents";
 
 import Category2 from "../category/UserRegCategory";
 import SelectPayload from "../template/SelectPayload";
+import LoginPage from "../ESD/LoginPage";
+import ForgotPassword from "../ESD/ForgotPassword";
+
 
 interface Props {
   window?: () => Window;
@@ -151,6 +154,15 @@ export default function DrawerAppBar(props: Props) {
               path="/dashboard/about"
               element={<DashboardSelectEvents />}
             />
+            <Route
+              path="/login"
+              element={<LoginPage />}
+            />
+                <Route
+              path="/forgot"
+              element={<ForgotPassword />}
+            />
+
 
             <Route path="/UserReg" element={<Category2 />} />
           </Routes>
