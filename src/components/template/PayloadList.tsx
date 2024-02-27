@@ -39,14 +39,14 @@ const PayloadList = () => {
     event.stopPropagation();
     setSelectedItem(item);
     setIsModalOpen(true);
-    for (let i = 0; i < events.length; i++) {
-      if (events[i].name === item) {
-        
-        setNewPayload(events[i].payload[0] as Payload);
-        break;
-      }
+
+    const foundEvent = events.find((eventItem) => eventItem.name === item);
+
+    if (foundEvent) {
+        setNewPayload(foundEvent.payload[0] as Payload);
     }
-  };
+};
+
 
   const handleModalClose = () => {
     setIsModalOpen(false);
