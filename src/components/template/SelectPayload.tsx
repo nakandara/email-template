@@ -2,21 +2,14 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
-import Typography from "@mui/material/Typography";
+import {payLoadEnum } from '../enum/StepEnum';
 import CustomizedSteppers from "../linearSteps/CustomizedSteppers";
 import "./Template.css";
 import PayloadList from "./PayloadList";
 import { useCardContext } from "../context/CardContext";
 import Category2 from "../category/UserRegCategory";
-
 import { events } from "../data/PayloadData";
 import { useState } from "react";
-
-const steps = [
-  "Select campaign settings",
-  "Create an ad group",
-  "Create an ad",
-];
 
 
 
@@ -45,7 +38,7 @@ const SelectPayload = () => {
           <Grid container spacing={2}>
             <Grid xs={12}>
               <Item>
-                {payLoadData === "FIRST" && <PayloadList />}
+                {payLoadData === payLoadEnum.INITIAL_PAYLOAD && <PayloadList />}
                 {events.map(
                   (event, index) =>
                     payLoadData === event.name && (

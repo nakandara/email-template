@@ -1,22 +1,12 @@
 import { useCardContext } from "../context/CardContext";
 
-
-
 interface ColumnNames {
   key: string;
   value: string;
 }
 
-
-
 const UserRegData = () => {
-  const {
-  
-    outPayLoad
-  } = useCardContext();
-
-
-
+  const { outPayLoad } = useCardContext();
 
   const jsonData = JSON.stringify(outPayLoad, null, 2);
 

@@ -9,6 +9,8 @@ import Check from "@mui/icons-material/Check";
 import SettingsIcon from "@mui/icons-material/Settings";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import VideoLabelIcon from "@mui/icons-material/VideoLabel";
+
+import {payLoadEnum } from '../enum/StepEnum';
 import StepConnector, {
   stepConnectorClasses,
 } from "@mui/material/StepConnector";
@@ -126,7 +128,7 @@ const CustomizedSteppers: React.FC<CustomCardProps> = ({
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    setPayLoadData("FIRST")
+    setPayLoadData(payLoadEnum.INITIAL_PAYLOAD)
     window.location.reload();
     localStorage.removeItem('payload');
   };

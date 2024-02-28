@@ -65,31 +65,31 @@ const transformDataToCategory = (data: DataItem): Category => {
 const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
   console.log(events);
   const jsonData = JSON.stringify(events, null, 2);
-  
+
   const payloadMap: { [key: string]: any[] } = {};
 
   events.forEach(event => {
     payloadMap[event.name] = event.payload;
   });
-  
+
   const getPayloadByEventName = (eventName: string) => {
     return payloadMap[eventName] || [];
   };
-  
+
   // Usage
 
-  
-  
+
+
   const payloadVariables: { [key: string]: any } = {};
 
- const testOne = events.forEach(event => {
+  const testOne = events.forEach(event => {
     const eventName = event.name;
     payloadVariables[`${eventName.toLowerCase()}CreatedPayload`] = getPayloadByEventName(eventName);
   });
-  
 
- 
-  
+
+
+
   const { outPayLoad, setSelectPayLoad } = useCardContext();
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -171,7 +171,7 @@ const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
               {selectedCategory === dataItem.title && (
                 <>
                   {dataItem.subcategories &&
-                  dataItem.subcategories.length > 0 ? (
+                    dataItem.subcategories.length > 0 ? (
                     "Select Sub Category"
                   ) : (
                     <NameCard
@@ -274,7 +274,7 @@ const Category2: React.FC<{ payload?: string }> = ({ payload }) => {
             onClick={handleModalOpen}
             style={{ justifyContent: "flex-end", alignItems: "flex-end" }}
           >
-            Out json data
+            Generate Json Data
           </button>
 
           <Modal
