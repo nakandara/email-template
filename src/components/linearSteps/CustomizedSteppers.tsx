@@ -6,9 +6,10 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Check from "@mui/icons-material/Check";
-import SettingsIcon from "@mui/icons-material/Settings";
-import GroupAddIcon from "@mui/icons-material/GroupAdd";
-import VideoLabelIcon from "@mui/icons-material/VideoLabel";
+import AddTaskTwoToneIcon from '@mui/icons-material/AddTaskTwoTone';
+import DriveFileRenameOutlineTwoToneIcon from '@mui/icons-material/DriveFileRenameOutlineTwoTone';
+import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
+import FestivalTwoToneIcon from '@mui/icons-material/FestivalTwoTone';
 
 import {payLoadEnum } from '../enum/StepEnum';
 import StepConnector, {
@@ -71,9 +72,14 @@ function ColorlibStepIcon(props: StepIconProps) {
   const { active, completed, className } = props;
 
   const icons: { [index: string]: React.ReactElement } = {
-    1: <SettingsIcon />,
-    2: <GroupAddIcon />,
-    3: <VideoLabelIcon />,
+    1: <FestivalTwoToneIcon />,
+    2: <AddTaskTwoToneIcon />,
+    3: (
+      <div>
+        <DriveFileRenameOutlineTwoToneIcon />
+        <EmailTwoToneIcon />
+      </div>
+    ),
   };
 
   return (
@@ -91,9 +97,9 @@ function ColorlibStepIcon(props: StepIconProps) {
 }
 
 const steps = [
-  "Select campaign settings",
-  "Create an ad group",
-  "Create an ad",
+  "Select Event (Payload)",
+  "Create an ad Variables group",
+  "Create an ad Template",
 ];
 
 interface CustomCardProps {

@@ -109,17 +109,26 @@
   
   }
 
-  .cardItem:hover {
+  .cardItem {
+    /* Add other styles for .cardItem here */
   
-    transform: scale(1.20);
+    transition: transform 0.3s ease-in-out, border 0.3s ease-in-out;
+  }
+  
+  .cardItem:hover {
+    transform: scale(1.15);
     cursor: pointer;
     border: 2px solid #6cd6df;
   }
-  
-
+    
   .horizontal-line {
-    border-top: 2px solid #ccc; /* Adjust the color and thickness as needed */
-    margin: 20px 0; /* Adjust the margin to control the spacing around the line */
+    border-top: 2px solid #ccc;
+    margin: 20px 0;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  .horizontal-line:hover {
+    border-color: #6cd6df; /* Adjust the color on hover */
   }
   
   .button-container {
